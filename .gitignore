@@ -1,2 +1,4 @@
 *.rcl
 *.rcg
+teams/*
+results/*
