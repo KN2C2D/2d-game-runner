@@ -4,36 +4,35 @@ echo $1
 echo "VS"
 echo $2
 
-DIR="$(dirname $0)"
+DIR=`pwd`
 
-nickname=$DIR
-declare -i i=`expr index $nickname "/*"`
-
-while [ $i -ne 0 ]
-do
-  echo $nickname
-  echo $i
-  i=`expr index $nickname "/*"`
-  nickname=${nickname:$i}
-done
-
+#running Games
 $DIR/teams/$1/startAll &
 $DIR/teams/$2/startAll &
 rcssserver server::synch_mode=true server::verbose=off
 
+#finding date for adding to log files
 D="$(date +%Y%m%d%H%M%S)"
-mv $DIR/*.rcg "$1_vs_$2-$D.rcg"
-mv $DIR/*.rcl "$1_vs_$2-$D.rcl"
+
+#extraction results from from log files to adding to new log files
+declare -i i=0
+tmp=`ls *.rcg`
+i=`expr index $tmp "_"`
+tmp=${tmp:$i}
+i=`expr index $tmp "-vs"`
+rt1=${tmp:0:i-1}
+tmp=${tmp:i+3}
+i=`expr index $tmp "_"`
+tmp=${tmp:i}
+i=`expr index $tmp "."`
+rt2=${tmp:0:i-1}
+
+mv $DIR/*.rcg "$1-$rt1-vs-$2-$rt2-$D.rcg"
+mv $DIR/*.rcl "$1-$rt1-vs-$2-$rt2-$D.rcl"
 
 if ! [ -d $DIR/results ]
 then
   mkdir $DIR/results
-  mkdir $DIR/results/$nickname
-else
-  if ! [ -d $DIR/results/$nickname ]
-  then
-    mkdir $DIR/results/$nickname
-  fi
 fi
 
-mv $DIR/*.rc? $DIR/results/$nickname
+mv $DIR/*.rc? $DIR/results/
