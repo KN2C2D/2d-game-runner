@@ -10,5 +10,5 @@ do
   idx=`expr index $line "_"`
   t1=${line:0:idx-1}
   t2=${line:idx}
-  $DIR/run.sh $t1 $t2
+  $DIR/run.sh $t1 $t2 $1
 done < $input

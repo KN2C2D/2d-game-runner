@@ -4,7 +4,7 @@ echo $1
 echo "VS"
 echo $2
 
-DIR=`pwd`
+DIR=`dirname $0`
 
 #running Games
 $DIR/teams/$1/startAll &
@@ -16,7 +16,7 @@ D="$(date +%Y%m%d%H%M%S)"
 
 #extraction results from from log files to adding to new log files
 declare -i i=0
-tmp=`ls *.rcg`
+tmp=`ls $DIR/*.rcg`
 i=`expr index $tmp "_"`
 tmp=${tmp:$i}
 i=`expr index $tmp "-vs"`
@@ -35,4 +35,14 @@ then
   mkdir $DIR/results
 fi
 
-mv $DIR/*.rc? $DIR/results/
+if [ -n $3 ]
+then
+  if ! [ -d $DIR/results/$3 ]
+  then
+    mkdir $DIR/results/$3
+  fi
+
+  mv $DIR/*.rc? $DIR/results/$3/
+else
+  mv $DIR/*.rc? $DIR/results/
+fi
