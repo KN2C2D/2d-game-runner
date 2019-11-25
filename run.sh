@@ -1,20 +1,20 @@
 #! /bin/bash
-
-echo $1
-echo "VS"
-echo $2
+#$1 ---> team1
+#$2 ---> team2
+#$3 ---> port
+#$4 ---> tag
 
 DIR=`dirname $0`
 
 #running Games
-$DIR/teams/$1/startAll &
-$DIR/teams/$2/startAll &
-rcssserver server::synch_mode=true server::verbose=off
+$DIR/teams/$1/startAll $3 &
+$DIR/teams/$2/startAll $3 &
+rcssserver server::synch_mode=true server::verbose=off server::port=$3
 
 #finding date for adding to log files
 D="$(date +%Y%m%d%H%M%S)"
 
-#extraction results from from log files to adding to new log files
+#extracting results from log files to adding to new log files
 declare -i i=0
 tmp=`ls $DIR/*.rcg`
 i=`expr index $tmp "_"`
@@ -35,14 +35,15 @@ then
   mkdir $DIR/results
 fi
 
-if [ -n $3 ]
+#tagging
+if [ -n $4 ]
 then
-  if ! [ -d $DIR/results/$3 ]
+  if ! [ -d $DIR/results/$4 ]
   then
-    mkdir $DIR/results/$3
+    mkdir $DIR/results/$4
   fi
 
-  mv $DIR/*.rc? $DIR/results/$3/
+  mv $DIR/*.rc? $DIR/results/$4/
 else
   mv $DIR/*.rc? $DIR/results/
 fi
