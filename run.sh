@@ -9,7 +9,7 @@ DIR=`dirname $0`
 
 declare -i port=$3
 declare -i coach_port=$3+1
-declate -i olcoach_port=$3+2
+declare -i olcoach_port=$3+2
 tag=$4
 Team1=$1
 Team2=$2
@@ -18,8 +18,8 @@ Team2=$2
 
 $DIR/teams/$Team1/startAll $port &
 $DIR/teams/$Team2/startAll $port &
-rcssserver server::synch_mode=true server::verbose=off server::port=$port\
-           server::coach_port=$coach_port server::olcoach_port=$olcoach_port
+rcssserver server::synch_mode=true server::verbose=off server::port=$port \
+server::coach_port=$coach_port server::olcoach_port=$olcoach_port
 
 #finding date for adding to log files
 D="$(date +%Y%m%d%H%M%S)"
@@ -37,8 +37,10 @@ tmp=${tmp:i}
 i=`expr index $tmp "."`
 rt2=${tmp:0:i-1}
 
-mv $DIR/*.rcg "$Team1-$rt1-vs-$Team2-$rt2-$D.rcg"
-mv $DIR/*.rcl "$Team1-$rt1-vs-$Team2-$rt2-$D.rcl"
+logName="$Team1-$rt1-vs-$Team2-$rt2-$D"
+
+mv $DIR/*.rcg "$logName.rcg"
+mv $DIR/*.rcl "$logName.rcl"
 
 if ! [ -d $DIR/results ]
 then
@@ -53,7 +55,7 @@ then
     mkdir $DIR/results/$tag
   fi
 
-  mv $DIR/*.rc? $DIR/results/$tag/
+  mv $DIR/$logName.rc? $DIR/results/$tag/
 else
-  mv $DIR/*.rc? $DIR/results/
+  mv $DIR/$logName.rc? $DIR/results/
 fi

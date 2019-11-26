@@ -10,11 +10,7 @@ declare -i port=$1
 declare -i i=0
 declare -i n=$2
 declare -i m=$3
-tag=$4+$m
-
-rm test_log.txt
-touch test_log.txt
-echo $port-$m >> test_log.txt
+tag=$4
 
 DIR=`dirname $0`
 input="$DIR/Games.txt"
