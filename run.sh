@@ -14,10 +14,16 @@ tag=$4
 Team1=$1
 Team2=$2
 
-#running Games
+tmpDirName="$Team1-$Team2"
+if ! [ -d $DIR/$tmpDirName ]
+then
+  mkdir $tmpDirName
+fi
+cd $DIR/$tmpDirName
 
-$DIR/teams/$Team1/startAll $port &
-$DIR/teams/$Team2/startAll $port &
+#running Games
+../teams/$Team1/startAll $port &
+../teams/$Team2/startAll $port &
 rcssserver server::synch_mode=true server::verbose=off server::port=$port \
 server::coach_port=$coach_port server::olcoach_port=$olcoach_port
 
@@ -26,7 +32,7 @@ D="$(date +%Y%m%d%H%M%S)"
 
 #extracting results from log files to adding to new log files
 declare -i i=0
-tmp=`ls $DIR/*.rcg`
+tmp=`ls *.rcg`
 i=`expr index $tmp "_"`
 tmp=${tmp:$i}
 i=`expr index $tmp "-vs"`
@@ -39,8 +45,10 @@ rt2=${tmp:0:i-1}
 
 logName="$Team1-$rt1-vs-$Team2-$rt2-$D"
 
-mv $DIR/*.rcg "$logName.rcg"
-mv $DIR/*.rcl "$logName.rcl"
+mv ./*.rcg "$logName.rcg"
+mv ./*.rcl "$logName.rcl"
+
+cd ..
 
 if ! [ -d $DIR/results ]
 then
@@ -55,7 +63,9 @@ then
     mkdir $DIR/results/$tag
   fi
 
-  mv $DIR/$logName.rc? $DIR/results/$tag/
+  mv $DIR/$tmpDirName/$logName.rc? $DIR/results/$tag/
 else
-  mv $DIR/$logName.rc? $DIR/results/
+  mv $DIR/$tmpDirName/$logName.rc? $DIR/results/
 fi
+
+rm -rf $DIR/$tmpDirName
