@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# $1 ---> port that want to kill (optional)
+
+port=$1
+
 DIR=`dirname $0`
 input="$DIR/proc.txt"
 
@@ -7,28 +11,26 @@ declare -i index
 
 index=0
 
-DIR=`dirname $0`
-input="$DIR/proc.txt"
 
 declare -i idx=0
 
 while IFS= read -r line
 do
-	echo $line
+  echo $line
   for var in $line
   do 
  		arr[$index]=$var
  		index=$index+1
- 	done
+  done
  	index=0
- 	if [ ${arr[0]} = "server" ]
+ 	if ! [ -n $port ]
  	then
  		kill ${arr[2]}
- 	fi
- 	if [ ${arr[0]} = "runOnPort" ]
- 	then 
- 		kill ${arr[2]}
- 	fi
- 
+ 	else
+ 		if [ $port = ${arr[1]} ]
+ 		then 
+ 			kill ${arr[2]}
+ 		fi
+	fi 
 done < $input
-rm -r $DIR/proc.txt
+
