@@ -23,6 +23,9 @@ do
  		index=$index+1
   done
  	index=0
+ 	#arr[0] ---> name of process
+ 	#arr[1] ---> port of process
+ 	#arr[2] ---> pid of process 
  	if ! [ -n $port ]
  	then
  		kill ${arr[2]}
