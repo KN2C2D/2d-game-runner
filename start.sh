@@ -1,34 +1,36 @@
 #! /bin/bash
 
-# $1 -> n : number of games running simultaneously
-# $2 -> tag (optional): Game results will be saved on results/tag
-# $3 -> ssp (optional) : servers start port - first server will be run on
+# n : number of games running simultaneously
+# tag (optional): Game results will be saved on results/tag
+# ssp (optional) : servers start port - first server will be run on
 #           this port and the number will be increased for next server and so on
-# $4 -> spd (optional) : servers port difference - the port number will be
+# spd (optional) : servers port difference - the port number will be
 #           increased by sdp from each server to the next
 
 # initializing
 declare -i n
 read -p "enter number of games running simultaneously: " n
-read -p "enter tag: " tag
+read -t 5 -p "enter tag: " tag
+if [[ $tag = "" ]]
+then
+  echo
+fi
+
 declare -i ssp
-read -p "enter servers start port" ssp
+read -t 5 -p "enter servers start port: " ssp
+if [ $ssp -eq 0 ]
+then
+  ssp=6000
+  echo "ssp=6000"
+fi
+
 declare -i spd
-read -p "enter servers port difference" spd
-
-#if [ -n $3 ]
-#then
-#  ssp=$3
-#else
-#  ssp=6000
-#fi
-
-#if [ -n $4 ]
-#then
-#  spd=$4
-#else
-#  spd=10
-#fi
+read -t 5 -p "enter servers port difference: " spd
+if [ $spd -eq 0 ]
+then
+  spd=10
+  echo "spd=10"
+fi
 
 DIR=`dirname $0`
 echo "start" $$ >> proc.txt
