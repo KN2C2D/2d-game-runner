@@ -8,24 +8,27 @@
 #           increased by sdp from each server to the next
 
 # initializing
-declare -i n=$1
-tag=$2
+declare -i n
+read -p "enter number of games running simultaneously: " n
+read -p "enter tag: " tag
 declare -i ssp
+read -p "enter servers start port" ssp
 declare -i spd
+read -p "enter servers port difference" spd
 
-if [ -n $3 ]
-then
-  ssp=$3
-else
-  ssp=6000
-fi
+#if [ -n $3 ]
+#then
+#  ssp=$3
+#else
+#  ssp=6000
+#fi
 
-if [ -n $4 ]
-then
-  spd=$4
-else
-  spd=10
-fi
+#if [ -n $4 ]
+#then
+#  spd=$4
+#else
+#  spd=10
+#fi
 
 DIR=`dirname $0`
 echo "start" $$ >> proc.txt
