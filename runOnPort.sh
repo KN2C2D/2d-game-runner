@@ -6,34 +6,46 @@
 # $3 -> m
 # $4 -> tag (optional)
 
+
+#####################variables
 declare -i port=$1
-declare -i i=0
 declare -i n=$2
 declare -i m=$3
 tag=$4
+declare -i i=0        
+DIR=`dirname $0`
+input="$DIR/Games.txt"  #the file include list of games
+team1=""
+team2=""
+#####################
 
+
+#$$ : the process number of the current shell
 echo "runOnPort" $port $$ >> proc.txt
 
-DIR=`dirname $0`
-input="$DIR/Games.txt"
 
-declare -i idx
-declare -i i=0
+findNameOfTeams(){
+  declare -i idx
+  idx=`expr index $line "_"`
+  team1=${line:0:idx-1}
+  team2=${line:idx}
+}
 
-while IFS= read -r line
-do
-  if [ $i -eq $m ]
-  then
-    idx=`expr index $line "_"`
-    t1=${line:0:idx-1}
-    t2=${line:idx}
-    $DIR/run.sh $t1 $t2 $port $tag
-  fi
+readFileAndRun(){
+  while IFS= read -r line
+  do
+    if [ $i -eq $m ]
+    then
+      findNameOfTeams
+      $DIR/run.sh $team1 $team2 $port $tag
+    fi
+    i=$i+1s
+    if [ $i -eq $n ]
+    then
+      i=0
+    fi
+  done < $input
+}
 
-  i=$i+1
-  if [ $i -eq $n ]
-  then
-    i=0
-  fi
-done < $input
 
+readFileAndRun
