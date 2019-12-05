@@ -6,6 +6,7 @@
 #$4 ---> tag
 
 DIR=`dirname $0`
+cd $DIR
 
 declare -i port=$3
 declare -i coach_port=$3+1
@@ -15,11 +16,11 @@ Team1=$1
 Team2=$2
 
 tmpDirName="$Team1-$Team2"
-if ! [ -d $DIR/$tmpDirName ]
+if ! [ -d $tmpDirName ]
 then
   mkdir $tmpDirName
 fi
-cd $DIR/$tmpDirName
+cd $tmpDirName
 
 #running Games
 ../teams/$Team1/startAll $port &
@@ -53,22 +54,22 @@ mv ./*.rcl "$logName.rcl"
 
 cd ..
 
-if ! [ -d $DIR/results ]
+if ! [ -d results ]
 then
-  mkdir $DIR/results
+  mkdir results
 fi
 
 #tagging
 if [ -n $tag ]
 then
-  if ! [ -d $DIR/results/$tag ]
+  if ! [ -d results/$tag ]
   then
-    mkdir $DIR/results/$tag
+    mkdir results/$tag
   fi
 
-  mv $DIR/$tmpDirName/$logName.rc? $DIR/results/$tag/
+  mv $tmpDirName/$logName.rc? results/$tag/
 else
-  mv $DIR/$tmpDirName/$logName.rc? $DIR/results/
+  mv $tmpDirName/$logName.rc? results/
 fi
 
-rm -rf $DIR/$tmpDirName
+rm -rf $tmpDirName

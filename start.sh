@@ -33,6 +33,7 @@ then
 fi
 
 DIR=`dirname $0`
+cd $DIR
 echo "start" $$ >> proc.txt
 # running runOnPort script for each set of games (n times)
 declare -i i
@@ -40,7 +41,7 @@ declare -i port=$ssp
 declare -i lim=$n-1
 for (( i= 0; i<n; i++))
 do
-  $DIR/runOnPort.sh $port $n $i $tag &
+  ./runOnPort.sh $port $n $i $tag &
   port=$port+$spd
 done
-rm -r $DIR/proc.txt
+rm -r proc.txt
