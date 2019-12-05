@@ -15,7 +15,8 @@ tag=$4
 echo "runOnPort" $port $$ >> proc.txt
 
 DIR=`dirname $0`
-input="$DIR/Games.txt"
+cd $DIR
+input="Games.txt"
 
 declare -i idx
 declare -i i=0
@@ -27,7 +28,7 @@ do
     idx=`expr index $line "_"`
     t1=${line:0:idx-1}
     t2=${line:idx}
-    $DIR/run.sh $t1 $t2 $port $tag
+    ./run.sh $t1 $t2 $port $tag
   fi
 
   i=$i+1
