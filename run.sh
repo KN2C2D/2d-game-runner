@@ -3,15 +3,26 @@
 #$1 ---> team1
 #$2 ---> team2
 #$3 ---> port
-#$4 ---> tag
+#$4 ---> global_tag
+#$5 ---> tag
 
+################################################################################
+#Function Definition
+# tag(global_tag, tag, tmpDirName)
+# {
+#
+# }
+################################################################################
 DIR=`dirname $0`
 cd $DIR
 
 declare -i port=$3
 declare -i coach_port=$3+1
 declare -i olcoach_port=$3+2
-tag=$4
+
+global_tag=$4
+tag=$5
+
 Team1=$1
 Team2=$2
 
@@ -26,8 +37,9 @@ cd $tmpDirName
 ../teams/$Team1/startAll $port &
 ../teams/$Team2/startAll $port &
 rcssserver server::synch_mode=true server::verbose=off server::port=$port \
-server::coach_port=$coach_port server::olcoach_port=$olcoach_port &
-echo "server $port $!" >> ../proc.txt 
+server::coach_port=$coach_port server::olcoach_port=$olcoach_port \
+server::auto_mode=true &
+echo "server $port $!" >> ../proc.txt
 wait
 
 
@@ -60,16 +72,36 @@ then
 fi
 
 #tagging
-if [ -n $tag ]
+if [ -n $global_tag ]
 then
-  if ! [ -d results/$tag ]
+  if ! [ -d results/$global_tag ]
   then
-    mkdir results/$tag
+    mkdir results/$global_tag
   fi
 
-  mv $tmpDirName/$logName.rc? results/$tag/
+  if [ -n $tag ]
+  then
+    if ! [ -d results/$global_tag/$tag ]
+    then
+      mkdir results/$global_tag/$tag
+    fi
+
+    mv $tmpDirName/$logName.rc? results/$global_tag/$tag
+  else
+    mv $tmpDirName/$logName.rc? results/$global_tag/
+  fi
 else
-  mv $tmpDirName/$logName.rc? results/
+  if [ -n $tag ]
+  then
+    if ! [ -d results/$tag ]
+    then
+      mkdir results/$tag
+    fi
+
+    mv $tmpDirName/$logName.rc? results/$tag
+  else
+    mv $tmpDirName/$logName.rc? results/
+  fi
 fi
 
 rm -rf $tmpDirName
