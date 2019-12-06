@@ -4,48 +4,61 @@
 # $1 -> Port for the games to be run on
 # $2 -> n
 # $3 -> m
-# $4 -> tag (optional)
+# $4 -> global_tag (optional)
 
-DIR=`dirname $0`
-cd $DIR
-#####################variables
 declare -i port=$1
+declare -i i=0
 declare -i n=$2
 declare -i m=$3
-tag=$4
-declare -i i=0        
-input="Games.txt"  #the file include list of games
-team1=""
-team2=""
-#####################
+global_tag=$4
 
 
 #$$ : the process number of the current shell
 echo "runOnPort" $port $$ >> proc.txt
 
+DIR=`dirname $0`
+cd $DIR
+input="Games.txt"
 
-findNameOfTeams(){
-  line=$1
-  declare -i idx
-  idx=`expr index $line "_"`
-  team1=${line:0:idx-1}
-  team2=${line:idx}
-}
+declare -i idx=0
+declare -i flag
 
-readFileAndRun(){
-  while IFS= read -r line
-  do
-    if [ $i -eq $m ]
+while IFS= read -r line
+do
+  if [ $i -eq $m ]
+  then
+    idx=0
+    for word in $line
+    do
+      A[$idx]=$word
+      idx=$idx+1
+    done
+
+    if [ $idx -eq 2 ]
     then
-      findNameOfTeams $line
-      ./run.sh $team1 $team2 $port $tag
-    fi
-    i=$i+1
-    if [ $i -eq $n ]
+      t1=${A[0]}
+      t2=${A[1]}
+      tag=""
+      flag=0
+    elif [ $idx -eq 3 ]
     then
-      i=0
+      t1=${A[0]}
+      t2=${A[1]}
+      tag=${A[2]}
+      flag=0
+    else
+      flag=1
     fi
-  done < $input
-}
 
-readFileAndRun
+    if [ $flag -eq 0 ]
+    then
+      ./run.sh $t1 $t2 $port $global_tag $tag
+    fi
+  fi
+
+  i=$i+1
+  if [ $i -eq $n ]
+  then
+    i=0
+  fi
+done < $input
