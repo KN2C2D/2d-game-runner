@@ -90,6 +90,9 @@ then
   else
     mv $tmpDirName/$logName.rc? results/$global_tag/
   fi
+
+  echo "$tag --- $D: $Team1-$rt1-vs-$Team2-$rt2" \
+  >>results/$global_tag/Results.txt
 else
   if [ -n $tag ]
   then
@@ -102,6 +105,8 @@ else
   else
     mv $tmpDirName/$logName.rc? results/
   fi
+
+  echo "$tag --- $D: $Team1-$rt1-vs-$Team2-$rt2" >>results/Results.txt
 fi
 
 rm -rf $tmpDirName
