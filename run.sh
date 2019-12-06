@@ -25,11 +25,11 @@ rt2=""
 ##############################methods
 runServerAndAgents(){
   #running Games
-  ../teams/$Team1/startAll $port &
-  ../teams/$Team2/startAll $port &
+  ../teams/$Team1/startAll $port &> serverLog.txt &
+  ../teams/$Team2/startAll $port &> serverLog.txt &
   rcssserver server::synch_mode=true server::verbose=off server::port=$port \
   server::coach_port=$coach_port server::olcoach_port=$olcoach_port \
-  server::auto_mode=true &
+  server::auto_mode=true &> serverLog.txt &
   echo "server $port $!" >> ../proc.txt
   wait
 }
