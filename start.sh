@@ -1,41 +1,54 @@
 #! /bin/bash
 
-# $1 -> n : number of games running simultaneously
-# $2 -> tag (optional): Game results will be saved on results/tag
-# $3 -> ssp (optional) : servers start port - first server will be run on
+# n : number of games running simultaneously
+# global_tag (optional): Game results will be saved on results/global_tag
+# ssp (optional) : servers start port - first server will be run on
 #           this port and the number will be increased for next server and so on
-# $4 -> spd (optional) : servers port difference - the port number will be
+# spd (optional) : servers port difference - the port number will be
 #           increased by sdp from each server to the next
 
-# initializing
-declare -i n=$1
-tag=$2
+#############################################variables
+declare -i n
 declare -i ssp
 declare -i spd
+tag=""
+##############################################methods
+initialize(){
+  read -p "enter number of games running simultaneously: " n
+  ############
+  read -t 5 -p "enter tag: " tag
+  if [[ $tag = "" ]]
+  then
+    echo
+  fi
+  ############
+  read -t 5 -p "enter servers start port: " ssp
+  if [ $ssp -eq 0 ]
+  then
+    ssp=6000
+    echo "ssp=6000"
+  fi
+  ###########
+  read -t 5 -p "enter servers port difference: " spd
+  if [ $spd -eq 0 ]
+  then
+    spd=10
+    echo "spd=10"
+  fi
+}
+###################################################
 
-if [ -n $3 ]
-then
-  ssp=$3
-else
-  ssp=6000
-fi
-
-if [ -n $4 ]
-then
-  spd=$4
-else
-  spd=10
-fi
+initialize
 
 DIR=`dirname $0`
+cd $DIR
 echo "start" $$ >> proc.txt
 # running runOnPort script for each set of games (n times)
 declare -i i
 declare -i port=$ssp
-declare -i lim=$n-1
 for (( i= 0; i<n; i++))
 do
-  $DIR/runOnPort.sh $port $n $i $tag &
+  ./runOnPort.sh $port $n $i $global_tag &
   port=$port+$spd
 done
-rm -r $DIR/proc.txt
+rm -r proc.txt
