@@ -1,5 +1,4 @@
 #! /bin/bash
-
 #$1 ---> team1
 #$2 ---> team2
 #$3 ---> port
@@ -21,51 +20,35 @@ Team2=$2
 #finding date for adding to log files
 D="$(date +%Y%m%d%H%M%S)"
 tmpDirName="$Team1-$Team2"
-result1=""
-result2=""
-##############################
-
-if ! [ -d $tmpDirName ]
-then
-  mkdir $tmpDirName
-fi
-cd $tmpDirName
-
-#running Games
-../teams/$Team1/startAll $port &
-../teams/$Team2/startAll $port &
-rcssserver server::synch_mode=true server::verbose=off server::port=$port \
-server::coach_port=$coach_port server::olcoach_port=$olcoach_port \
-server::auto_mode=true &
-echo "server $port $!" >> ../proc.txt
-wait
-
-#extracting results from log files to adding to new log files
-declare -i i=0
-tmp=`ls *.rcg`
-i=`expr index $tmp "_"`
-tmp=${tmp:$i}
-i=`expr index $tmp "-vs"`
-rt1=${tmp:0:i-1}
-tmp=${tmp:i+3}
-i=`expr index $tmp "_"`
-tmp=${tmp:i}
-i=`expr index $tmp "."`
-rt2=${tmp:0:i-1}
-
-logName="$Team1-$rt1-vs-$Team2-$rt2-$D"
-
-mv ./*.rcg "$logName.rcg"
-mv ./*.rcl "$logName.rcl"
-
-cd ..
-
-if ! [ -d results ]
-then
-  mkdir results
-fi
-
-#tagging
+rt1=""
+rt2=""
+##############################methods
+runServerAndAgents(){
+  #running Games
+  ../teams/$Team1/startAll $port &
+  ../teams/$Team2/startAll $port &
+  rcssserver server::synch_mode=true server::verbose=off server::port=$port \
+  server::coach_port=$coach_port server::olcoach_port=$olcoach_port \
+  server::auto_mode=true &
+  echo "server $port $!" >> ../proc.txt
+  wait
+}
+findResults(){
+  #extracting results from log files to adding to new log files
+  declare -i i=0
+  tmp=`ls *.rcg`
+  i=`expr index $tmp "_"`
+  tmp=${tmp:$i}
+  i=`expr index $tmp "-vs"`
+  rt1=${tmp:0:i-1}
+  tmp=${tmp:i+3}
+  i=`expr index $tmp "_"`
+  tmp=${tmp:i}
+  i=`expr index $tmp "."`
+  rt2=${tmp:0:i-1}
+}
+tagging(){
+  #tagging
 if [ -n $global_tag ]
 then
   if ! [ -d results/$global_tag ]
@@ -102,5 +85,30 @@ else
 
   echo "$tag --- $D: $Team1-$rt1-vs-$Team2-$rt2" >>results/Results.txt
 fi
+}
+#####################################
 
+
+
+if ! [ -d $tmpDirName ]
+then
+  mkdir $tmpDirName
+fi
+cd $tmpDirName
+
+runServerAndAgents
+findResults
+logName="$Team1-$rt1-vs-$Team2-$rt2-$D"
+
+mv ./*.rcg "$logName.rcg"
+mv ./*.rcl "$logName.rcl"
+
+cd ..
+
+if ! [ -d results ]
+then
+  mkdir results
+fi
+
+tagging
 rm -rf $tmpDirName
