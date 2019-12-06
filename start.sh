@@ -7,12 +7,12 @@
 # spd (optional) : servers port difference - the port number will be
 #           increased by sdp from each server to the next
 
-# initializing
+#############################################variables
 declare -i n
 declare -i ssp
 declare -i spd
 tag=""
-
+##############################################methods
 initialize(){
   read -p "enter number of games running simultaneously: " n
   ############
@@ -36,6 +36,7 @@ initialize(){
     echo "spd=10"
   fi
 }
+###################################################
 
 initialize
 
