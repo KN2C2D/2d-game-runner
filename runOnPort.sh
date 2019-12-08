@@ -6,12 +6,14 @@
 # $2 -> n
 # $3 -> m
 # $4 -> global_tag (optional)
+# $5 -> teamsDIR
 ######################################variables
 declare -i port=$1
 declare -i i=0
 declare -i n=$2
 declare -i m=$3
 global_tag=$4
+teamsDIR=$5
 declare -i idx=0
 declare -i flag
 #########################################methods
@@ -47,7 +49,7 @@ do
 
     if [ $flag -eq 0 ]
     then
-      ./run.sh $t1 $t2 $port $global_tag $tag
+      ./run.sh $t1 $t2 $port $global_tag $tag $teamsDIR
     fi
   fi
 
