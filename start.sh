@@ -8,8 +8,14 @@
 #           increased by sdp from each server to the next
 
 # initializing
-declare -i n
-read -p "enter number of games running simultaneously: " n
+declare -i n=0
+read -t 5 -p "enter number of games running simultaneously: " n
+if [ $n -eq 0 ]
+then
+  n=1
+  echo "n=1"
+fi
+
 read -t 5 -p "enter tag: " tag
 if [[ $tag = "" ]]
 then
