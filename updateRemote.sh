@@ -13,9 +13,9 @@ do
   then
     idx=`expr index $line '@'`
     user=${line:0:idx-1}
-    P="/home/$user/$TMP_PATH"
+    P="/home/$user/$DEFAULT_TMP_PATH"
     ssh $line mkdir -p $P &
-    scp -rC $DIR/[!.]* "$line:$P" &
+    scp -rC $DIR/[!.]* "$line:$P" >"/tmp/tmpSCPLOG.txt" &
     echo $line
     echo $user
     echo $P
