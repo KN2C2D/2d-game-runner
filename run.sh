@@ -47,51 +47,50 @@ findResults(){
   i=`expr index $tmp "."`
   rt2=${tmp:0:i-1}
 }
-tagging(){
+makeTag(){
   #tagging
-if [ -n $global_tag ]
-then
-  if ! [ -d results/$global_tag ]
+  if [ -n $global_tag ]
   then
-    mkdir results/$global_tag
-  fi
-
-  if [ -n $tag ]
-  then
-    if ! [ -d results/$global_tag/$tag ]
+    if ! [ -d results/$global_tag ]
     then
-      mkdir results/$global_tag/$tag
+      mkdir results/$global_tag
     fi
 
-    mv $tmpDirName/$logName.rc? results/$global_tag/$tag
-  else
-    mv $tmpDirName/$logName.rc? results/$global_tag/
-  fi
-
-  echo "$tag --- $D: $Team1-$rt1-vs-$Team2-$rt2" \
-  >>results/$global_tag/Results.txt
-else
-  if [ -n $tag ]
-  then
-    if ! [ -d results/$tag ]
+    if [ -n $tag ]
     then
-      mkdir results/$tag
+      if ! [ -d results/$global_tag/$tag ]
+      then
+        mkdir results/$global_tag/$tag
+      fi
+
+      mv $tmpDirName/$logName.rc? results/$global_tag/$tag
+    else
+      mv $tmpDirName/$logName.rc? results/$global_tag/
     fi
 
-    mv $tmpDirName/$logName.rc? results/$tag
+    echo "$tag --- $D: $Team1-$rt1-vs-$Team2-$rt2" \
+    >>results/$global_tag/Results.txt
   else
-    mv $tmpDirName/$logName.rc? results/
-  fi
+    if [ -n $tag ]
+    then
+      if ! [ -d results/$tag ]
+      then
+        mkdir results/$tag
+      fi
 
-  echo "$tag --- $D: $Team1-$rt1-vs-$Team2-$rt2" >>results/Results.txt
-fi
+      mv $tmpDirName/$logName.rc? results/$tag
+    else
+      mv $tmpDirName/$logName.rc? results/
+    fi
+
+    echo "$tag --- $D: $Team1-$rt1-vs-$Team2-$rt2" >>results/Results.txt
+  fi
 }
 #####################################
 
 
 
-if ! [ -d $tmpDirName ]
-then
+if ! [ -d $tmpDirName ] ; then
   mkdir $tmpDirName
 fi
 cd $tmpDirName
@@ -105,10 +104,9 @@ mv ./*.rcl "$logName.rcl"
 
 cd ..
 
-if ! [ -d results ]
-then
+if ! [ -d results ] ; then
   mkdir results
 fi
 
-tagging
+makeTag
 rm -rf $tmpDirName

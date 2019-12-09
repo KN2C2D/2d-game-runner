@@ -17,38 +17,39 @@ initialize(){
   read -p "enter number of games running simultaneously: " n
   ############
   read -t 5 -p "enter tag: " tag
-  if [[ $tag = "" ]]
-  then
+  if [[ $tag = "" ]] ; then
     echo
   fi
   ############
   read -t 5 -p "enter servers start port: " ssp
-  if [ $ssp -eq 0 ]
-  then
+  if [ $ssp -eq 0 ] ; then
     ssp=6000
     echo "ssp=6000"
   fi
   ###########
   read -t 5 -p "enter servers port difference: " spd
-  if [ $spd -eq 0 ]
-  then
+  if [ $spd -eq 0 ] ; then
     spd=10
     echo "spd=10"
   fi
 }
+runOnPorts(){
+  declare -i i
+  for (( i= 0; i<n; i++)) ; do
+    ./runOnPort.sh $port $n $i $global_tag &
+    port=$port+$spd
+  done
+}
 ###################################################
+DIR=`dirname $0`
+cd $DIR
 
 initialize
 
-DIR=`dirname $0`
-cd $DIR
-echo "start" $$ >> proc.txt
+# $$ -> the process number of the current shell
+echo "start" $$ > proc.txt
 # running runOnPort script for each set of games (n times)
-declare -i i
 declare -i port=$ssp
-for (( i= 0; i<n; i++))
-do
-  ./runOnPort.sh $port $n $i $global_tag &
-  port=$port+$spd
-done
+runOnPorts
+
 rm -r proc.txt
