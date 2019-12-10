@@ -6,7 +6,6 @@
 #$5 ---> tag
 
 DIR=`dirname $0`
-cd $DIR
 #############################variables
 declare -i port=$3
 declare -i coach_port=$3+1
@@ -25,11 +24,12 @@ rt2=""
 ##############################methods
 runServerAndAgents(){
   #running Games
-  ../teams/$Team1/startAll $port &> serverLog.txt &
-  ../teams/$Team2/startAll $port &> serverLog.txt &
+  $DIR/teams/$Team1/startAll $port &> serverLog.txt &
+  $DIR/teams/$Team2/startAll $port &> serverLog.txt &
   rcssserver server::synch_mode=true server::verbose=off server::port=$port \
   server::coach_port=$coach_port server::olcoach_port=$olcoach_port \
-  server::auto_mode=true &> serverLog.txt &
+  server::auto_mode=true server::text_log_dir="$DIR/$tmpDirName"\
+  server::game_log_dir="$DIR/$tmpDirName" &> serverLog.txt &
   echo "server $port $!" >> ../proc.txt
   wait
 }
@@ -94,9 +94,9 @@ if ! [ -d $tmpDirName ]
 then
   mkdir $tmpDirName
 fi
-cd $tmpDirName
 
 runServerAndAgents
+cd $tmpDirName
 findResults
 logName="$Team1-$rt1-vs-$Team2-$rt2-$D"
 

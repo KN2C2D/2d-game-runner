@@ -1,6 +1,6 @@
 #! /bin/bash
 
-# run run script for k * n + m games from Games.txt on specifiedn port
+# run run script for k * n + m games from Games.txt on specified port
 #######################################input
 # $1 -> Port for the games to be run on
 # $2 -> n

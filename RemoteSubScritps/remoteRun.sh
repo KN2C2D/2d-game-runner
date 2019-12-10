@@ -65,7 +65,7 @@ tagging(){
   ssh $master "echo "$tag---$D:$Team1--vs--$Team2:$rt1--$rt2"\
   >>$RESULTS_PATH/Results.txt" </dev/null
   scp -r $DIR/results/* $master:$RESULTS_PATH </dev/null
-  rm -r results/*
+  rm -r $DIR/results/*
 }
 ################################################################################
 if ! [ -d $DIR/$tmpDirName ]
@@ -87,4 +87,4 @@ fi
 
 tagging
 
-rm -rf $tmpDirName
+rm -rf $DIR/$tmpDirName
