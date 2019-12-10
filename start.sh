@@ -11,13 +11,13 @@
 declare -i n
 declare -i ssp
 declare -i spd
-tag=""
+global_tag=""
 ##############################################methods
 initialize(){
   read -p "enter number of games running simultaneously: " n
   ############
-  read -t 5 -p "enter tag: " tag
-  if [[ $tag = "" ]]
+  read -t 5 -p "enter tag: " global_tag
+  if [[ $global_tag = "" ]]
   then
     echo
   fi
@@ -42,7 +42,7 @@ initialize
 
 DIR=`dirname $0`
 cd $DIR
-echo "start" $$ >> proc.txt
+echo "start" $$ > proc.txt
 # running runOnPort script for each set of games (n times)
 declare -i i
 declare -i port=$ssp
