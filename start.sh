@@ -50,6 +50,7 @@ initialize(){
   fi
 }
 writePathToFile(){
+  resultDIR=$resultDIR/$global_tag
   echo $teamsDIR > path.txt
   echo $resultDIR >> path.txt
 }
@@ -65,7 +66,7 @@ echo "start" $$ > proc.txt
 declare -i i
 declare -i port=$ssp
 for (( i= 0; i<n; i++)) ; do
-  ./runOnPort.sh $port $n $i $global_tag  &
+  ./runOnPort.sh $port $n $i &
   port=$port+$spd
 done
 wait

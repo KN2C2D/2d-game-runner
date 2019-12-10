@@ -2,8 +2,7 @@
 #$1 ---> team1
 #$2 ---> team2
 #$3 ---> port
-#$4 ---> global_tag
-#$5 ---> tag
+#$4 ---> tag
 
 DIR=`dirname $0`
 cd $DIR
@@ -12,8 +11,7 @@ declare -i port=$3
 declare -i coach_port=$3+1
 declare -i olcoach_port=$3+2
 
-global_tag=$4
-tag=$5
+tag=$4
 teamsDIR=`head -n 1 path.txt`
 resultDIR=`tail -n 1 path.txt`
 
