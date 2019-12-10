@@ -4,13 +4,16 @@ DIR=`dirname $0`
 input="$DIR/remoteAddresses.txt"
 
 DEFAULT_REMOTE_PATH="Desktop/RemoteGamesFiles"
+REMOTE_SCRIPTS_PATH="$DIR/RemoteSubScritps"
+TEAMS_PATH=`head -n 1 $DIR/path.txt`
 
 declare -i count
 declare -i runFlag
 
-echo "Compressing teams folder."
-tar -czf $DIR/teams.tar.gz $DIR/teams
-echo "teams folder compressed."
+echo "Compressing files."
+tar -czf $DIR/transfer.tar.gz $TEAMS_PATH $REMOTE_SCRIPTS_PATH/remoteRun.sh\
+ $DIR/path.txt $DIR/masterAddress.txt
+echo "Files compressed."
 
 while IFS= read -r line
 do
@@ -36,9 +39,11 @@ do
   if ! [ $count -eq 0 ]
   then
     ssh $server mkdir -p $remotePath </dev/null
-    scp -rC $DIR/teams.tar.gz "$server:$remotePath" >/tmp/tmp_scp_log.txt </dev/null
-    ssh $server tar -xzf $remotePath/teams.tar.gz -C $remotePath/ </dev/null
-    ssh $server rm $remotePath/teams.tar.gz </dev/null
+    scp -rC $DIR/transfer.tar.gz "$server:$remotePath" >/tmp/tmp_scp_log.txt </dev/null
+    ssh $server tar -xzf $remotePath/transfer.tar.gz -C $remotePath/ </dev/null
+    ssh $server mv $remotePath/RemoteSubScritps/* $remotePath/ </dev/null
+    ssh $server rm -r $remotePath/RemoteSubScritps </dev/null
+    ssh $server rm $remotePath/transfer.tar.gz </dev/null
   fi
 
   echo "$line -> Done."
@@ -46,4 +51,4 @@ done < $input
 
 wait
 
-rm $DIR/teams.tar.gz
+rm $DIR/transfer.tar.gz
