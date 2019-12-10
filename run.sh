@@ -4,7 +4,6 @@
 #$3 ---> port
 #$4 ---> global_tag
 #$5 ---> tag
-#$6 ---> teamsDIR
 
 DIR=`dirname $0`
 cd $DIR
@@ -15,7 +14,8 @@ declare -i olcoach_port=$3+2
 
 global_tag=$4
 tag=$5
-teamsDIR=$6
+teamsDIR=`head -n 1 path.txt`
+resultDIR=`tail -n 1 path.txt`
 
 Team1=$1
 Team2=$2
@@ -26,9 +26,12 @@ rt1=""
 rt2=""
 ##############################methods
 runServerAndAgents(){
+  if [[  $teamsDIR = "" ]] ; then
+    teamsDIR=$DIR/teams
+  fi
   #running Games
-  $teamsDIR/$Team1/startAll $port &
-  $teamsDIR/$Team2/startAll $port &
+  ../$teamsDIR/$Team1/startAll $port &
+  ../$teamsDIR/$Team2/startAll $port &
   rcssserver server::synch_mode=true server::verbose=off server::port=$port \
   server::coach_port=$coach_port server::olcoach_port=$olcoach_port \
   server::auto_mode=true  &
@@ -49,51 +52,52 @@ findResults(){
   i=`expr index $tmp "."`
   rt2=${tmp:0:i-1}
 }
-tagging(){
+createResultDirectory(){
+  if [[  $resultDIR = "" ]] ; then
+    if ! [ -d results ] ; then
+      mkdir results
+    fi
+    resultDIR=results
+  fi
+}
+makeTag(){
   #tagging
-if [ -n $global_tag ]
-then
-  if ! [ -d results/$global_tag ]
-  then
-    mkdir results/$global_tag
-  fi
-
-  if [ -n $tag ]
-  then
-    if ! [ -d results/$global_tag/$tag ]
-    then
-      mkdir results/$global_tag/$tag
+  if [ -n $global_tag ] ; then
+    if ! [ -d $resultDIR/$global_tag ] ; then
+      mkdir $resultDIR/$global_tag
     fi
 
-    mv $tmpDirName/$logName.rc? results/$global_tag/$tag
-  else
-    mv $tmpDirName/$logName.rc? results/$global_tag/
-  fi
+    if [ -n $tag ] ; then
+      if ! [ -d $resultDIR/$global_tag/$tag ] ; then
+        mkdir $resultDIR/$global_tag/$tag
+      fi
 
-  echo "$tag --- $D: $Team1-$rt1-vs-$Team2-$rt2" \
-  >>results/$global_tag/Results.txt
-else
-  if [ -n $tag ]
-  then
-    if ! [ -d results/$tag ]
-    then
-      mkdir results/$tag
+      mv $tmpDirName/$logName.rc? $resultDIR/$global_tag/$tag
+    else
+      mv $tmpDirName/$logName.rc? $resultDIR/$global_tag/
     fi
 
-    mv $tmpDirName/$logName.rc? results/$tag
+    echo "$tag --- $D: $Team1-$rt1-vs-$Team2-$rt2" \
+    >>$resultDIR/$global_tag/Results.txt
   else
-    mv $tmpDirName/$logName.rc? results/
-  fi
+    if [ -n $tag ] ; then
+      if ! [ -d $resultDIR/$tag ] ; then
+        mkdir $resultDIR/$tag
+      fi
 
-  echo "$tag --- $D: $Team1-$rt1-vs-$Team2-$rt2" >>results/Results.txt
-fi
+      mv $tmpDirName/$logName.rc? $resultDIR/$tag
+    else
+      mv $tmpDirName/$logName.rc? $resultDIR/
+    fi
+
+    echo "$tag --- $D: $Team1-$rt1-vs-$Team2-$rt2" >>$resultDIR/Results.txt
+  fi
 }
 #####################################
 
 
 
-if ! [ -d $tmpDirName ]
-then
+if ! [ -d $tmpDirName ] ; then  
   mkdir $tmpDirName
 fi
 cd $tmpDirName
@@ -107,10 +111,7 @@ mv ./*.rcl "$logName.rcl"
 
 cd ..
 
-if ! [ -d results ]
-then
-  mkdir results
-fi
+createResultDirectory
 
-tagging
+makeTag
 rm -rf $tmpDirName
