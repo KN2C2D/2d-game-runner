@@ -62,6 +62,7 @@ tagging(){
     mv $DIR/$tmpDirName/$logName.rc? $DIR/results/
   fi
 
+  ssh $master mkdir -p $RESULTS_PATH
   ssh $master "echo "$tag---$D:$Team1--vs--$Team2:$rt1--$rt2"\
   >>$RESULTS_PATH/Results.txt" </dev/null
   scp -r $DIR/results/* $master:$RESULTS_PATH </dev/null
