@@ -1,6 +1,6 @@
 #! /bin/bash
 
-# run run script for k * n + m games from Games.txt on specified port and server
+# run script for k * n + m games from Games.txt on specified port and server
 # $1 -> remote_index: index of remote server (for this script) in remoteAddresses.txt
 # $2 -> Port for the games to be run on
 # $3 -> n: (total number of servers * total number of ports)

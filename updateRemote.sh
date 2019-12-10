@@ -12,7 +12,8 @@ declare -i runFlag
 
 echo "Compressing files."
 tar -czf $DIR/transfer.tar.gz $TEAMS_PATH $REMOTE_SCRIPTS_PATH/remoteRun.sh\
- $DIR/path.txt $DIR/masterAddress.txt
+ $DIR/path.txt $DIR/masterAddress.txt $DIR/$REMOTE_SCRIPTS_PATH/kill.sh\
+ $DIR/$REMOTE_SCRIPTS_PATH/killall.sh
 echo "Files compressed."
 
 while IFS= read -r line
