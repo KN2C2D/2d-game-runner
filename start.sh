@@ -32,11 +32,6 @@ initialize(){
     echo "n=1"
   fi
   ############
-  read -t 5 -p "enter tag: " global_tag
-  if [[ $global_tag = "" ]] ; then
-    echo
-  fi
-  ############
   read -t 5 -p "enter servers start port: " ssp
   if [ $ssp -eq 0 ] ; then
     ssp=6000
@@ -50,7 +45,12 @@ initialize(){
   fi
 }
 writePathToFile(){
-  resultDIR=$resultDIR/$global_tag
+  firstChar=${resultDIR:0:1}
+  if [[ $firstChar = "." ]] ; then
+    resultDIR=${resultDIR:1:${#resultDIR}}
+    resultDIR=`pwd`$resultDIR
+  fi
+  resultDIR=$resultDIR
   echo $teamsDIR > path.txt
   echo $resultDIR >> path.txt
 }

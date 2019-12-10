@@ -60,36 +60,16 @@ createResultDirectory(){
 }
 makeTag(){
   #tagging
-  if [ -n $global_tag ] ; then
-    if ! [ -d $resultDIR/$global_tag ] ; then
-      mkdir $resultDIR/$global_tag
+  if [ -n $tag ] ; then
+    if ! [ -d $resultDIR/$tag ] ; then
+      mkdir $resultDIR/$tag
     fi
 
-    if [ -n $tag ] ; then
-      if ! [ -d $resultDIR/$global_tag/$tag ] ; then
-        mkdir $resultDIR/$global_tag/$tag
-      fi
-
-      mv $tmpDirName/$logName.rc? $resultDIR/$global_tag/$tag
-    else
-      mv $tmpDirName/$logName.rc? $resultDIR/$global_tag/
-    fi
-
-    echo "$tag --- $D: $Team1-$rt1-vs-$Team2-$rt2" \
-    >>$resultDIR/$global_tag/Results.txt
+    mv $tmpDirName/$logName.rc? $resultDIR/$tag
   else
-    if [ -n $tag ] ; then
-      if ! [ -d $resultDIR/$tag ] ; then
-        mkdir $resultDIR/$tag
-      fi
-
-      mv $tmpDirName/$logName.rc? $resultDIR/$tag
-    else
-      mv $tmpDirName/$logName.rc? $resultDIR/
-    fi
-
-    echo "$tag --- $D: $Team1-$rt1-vs-$Team2-$rt2" >>$resultDIR/Results.txt
+    mv $tmpDirName/$logName.rc? $resultDIR/
   fi
+  echo "$tag --- $D: $Team1-$rt1-vs-$Team2-$rt2" >>$resultDIR/Results.txt
 }
 #####################################
 
