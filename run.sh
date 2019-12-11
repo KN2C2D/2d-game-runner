@@ -30,7 +30,7 @@ runServerAndAgents(){
   server::coach_port=$coach_port server::olcoach_port=$olcoach_port \
   server::auto_mode=true server::text_log_dir="$DIR/$tmpDirName"\
   server::game_log_dir="$DIR/$tmpDirName" &> serverLog.txt &
-  echo "server $port $!" >> ../proc.txt
+  echo "server $port $!" >> $DIR/proc.txt
   wait
 }
 findResults(){

@@ -42,17 +42,10 @@ findServer(){
 
   return 1
 }
-################################################################################
-server_index=$1
-if [[ -n $server_index ]]; then
-  findServer "$DIR/remoteAddresses.txt" "$server_index"
-  echo $server
-  echo $serverPath
-  if [[ -n $server ]] && [[ ${server:0:1} != "#" ]]; then
-    ssh $server "$serverPath/kill.sh" $2 </dev/null
-  fi
-else
-  input="$DIR/remoteAddresses.txt"
+
+killall(){
+  input=$1
+
   while IFS= read -r line
   do
     wordCount=0
@@ -79,4 +72,47 @@ else
     fi
 
   done < $input
+}
+
+initializeArr(){
+  declare -i idx=0
+
+  for var in $line ; do
+ 		arr[$index]=$var
+ 		index=$index+1
+  done
+}
+
+readFileAndKill(){
+  input=$1
+  port=$2
+
+  while IFS= read -r line; do
+    initializeArr
+    #arr[0] ---> name of process
+    #arr[1] ---> port of process
+    #arr[2] ---> pid of process
+    if ! [[ -n $port ]]; then
+  	  kill ${arr[2]}
+    elif [[ $port = ${arr[1]} ]]; then
+ 	    kill ${arr[2]}
+ 	  fi
+  done < $input
+}
+
+################################################################################
+#Local processes kill
+port=$2
+readFileAndKill "$DIR/proc.txt" $port
+
+################################################################################
+#Remote processes kill
+server_index=$1
+if [[ -n $server_index ]]; then
+  findServer "$DIR/remoteAddresses.txt" "$server_index"
+  if [[ -n $server ]] && [[ ${server:0:1} != "#" ]]; then
+    ssh $server "$serverPath/kill.sh" $2 </dev/null
+  fi
+else
+  killall "$DIR/remoteAddresses.txt"
 fi
