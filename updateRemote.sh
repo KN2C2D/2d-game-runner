@@ -25,11 +25,11 @@ do
     count+=1
   done
 
-  if [ $count -eq 2 ]
+  if [ $count -eq 3 ]
   then
     server=${W[0]}
-    remotePath=${W[1]}
-  elif [ $count -eq 1 ]
+    remotePath=${W[2]}
+  elif [ $count -eq 2 ]
   then
     server=${W[0]}
     declare -i idx=`expr index ${W[0]} '@'`
@@ -47,7 +47,7 @@ do
     ssh $server rm $remotePath/transfer.tar.gz </dev/null
   fi
 
-  echo "$line -> Done."
+  echo "$server -> Done."
 done < $input
 
 wait

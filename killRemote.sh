@@ -22,11 +22,11 @@ findServer(){
         wordCount=$wordCount+1
       done
 
-      if [[ $wordCount -eq 2 ]]; then
+      if [[ $wordCount -eq 3 ]]; then
         server=${tempArr[0]}
-        serverPath=${tempArr[1]}
+        serverPath=${tempArr[2]}
         return 0
-      elif [[ $wordCount -eq 1 ]]; then
+      elif [[ $wordCount -eq 2 ]]; then
         server=${tempArr[0]}
         serverPath="Desktop/RemoteGamesFiles"
         return 0
@@ -59,11 +59,11 @@ else
       wordCount=$wordCount+1
     done
 
-    if [[ $wordCount -eq 2 ]]; then
+    if [[ $wordCount -eq 3 ]]; then
       server=${tempArr[0]}
-      serverPath=${tempArr[1]}
+      serverPath=${tempArr[2]}
       ssh $server "$serverPath/kill.sh" $2 </dev/null
-    elif [[ $wordCount -eq 1 ]]; then
+    elif [[ $wordCount -eq 2 ]]; then
       server=${tempArr[0]}
       serverPath="Desktop/RemoteGamesFiles"
       ssh $server "$serverPath/kill.sh" $2 </dev/null
