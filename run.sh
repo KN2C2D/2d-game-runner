@@ -52,10 +52,10 @@ findResults(){
 }
 createResultDirectory(){
   if [[  $resultDIR = "" ]] ; then
-    if ! [ -d results ] ; then
-      mkdir $DIR/results
-    fi
     resultDIR=$DIR/results
+  fi
+  if ! [ -d $resultDIR ] ; then
+    mkdir $resultDIR
   fi
 }
 makeTag(){

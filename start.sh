@@ -45,12 +45,17 @@ initialize(){
   fi
 }
 writePathToFile(){
+  if [[ $resultDIR = "" ]] ; then
+    resultDIR=$DIR/results
+  fi
+  if [[ $teamsDIR = "" ]] ; then
+    teamsDIR=$DIR/teams
+  fi
   firstChar=${resultDIR:0:1}
   if [[ $firstChar = "." ]] ; then
     resultDIR=${resultDIR:1}
     resultDIR=`pwd`$resultDIR
   fi
-  resultDIR=$resultDIR
   echo $teamsDIR > $DIR/path.txt
   echo $resultDIR >> $DIR/path.txt
 }
