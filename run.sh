@@ -69,7 +69,9 @@ makeTag(){
   else
     mv $tmpDirName/$logName.rc? $resultDIR/
   fi
-  echo "$tag --- $D: $Team1-$rt1-vs-$Team2-$rt2" >>$resultDIR/Results.txt
+
+  echo "$tag --- $D: $Team1-$rt1-vs-$Team2-$rt2" >>results/Results.txt
+fi
 }
 #####################################
 

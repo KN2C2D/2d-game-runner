@@ -47,7 +47,7 @@ readFileAndRun(){
     if [ $i -eq $n ] ; then
       i=0
     fi
-  done < $input
+  done < $1
 }
 
 #########################################
@@ -59,4 +59,4 @@ DIR=`dirname $0`
 cd $DIR
 input="Games.txt"
 
-readFileAndRun
+readFileAndRun $input
