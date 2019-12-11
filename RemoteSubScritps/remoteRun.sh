@@ -83,7 +83,7 @@ mv $DIR/$tmpDirName/*.rcl "$DIR/$tmpDirName/$logName.rcl"
 
 if ! [ -d results ]
 then
-  mkdir results
+  mkdir $DIR/results
 fi
 
 tagging
