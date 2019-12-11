@@ -15,12 +15,12 @@ teamsDIR=""
 resultDIR=""
 ##############################################methods
 initialize(){
-  read -t 5 -p "enter path of teams directory: " teamsDIR
+  read -t 10 -p "enter path of teams directory: " teamsDIR
   if [[ $teamsDIR = "" ]] ; then
     echo
   fi
   ###########
-  read -t 5 -p "enter path of results directory: " resultDIR
+  read -t 10 -p "enter path of results directory: " resultDIR
   if [[ $resultDIR = "" ]] ; then
     echo
   fi
@@ -46,7 +46,7 @@ initialize(){
 writePathToFile(){
   firstChar=${resultDIR:0:1}
   if [[ $firstChar = "." ]] ; then
-    resultDIR=${resultDIR:1:${#resultDIR}}
+    resultDIR=${resultDIR:1}
     resultDIR=`pwd`$resultDIR
   fi
   resultDIR=$resultDIR
