@@ -37,7 +37,7 @@ do
     remotePath="/home/$user/$DEFAULT_REMOTE_PATH"
   fi
 
-  if ! [ $count -eq 0 ]
+  if [[ $count -gt 1 ]] && [[ $count -lt 4 ]] && [[ ${server:0:1} != "#" ]]
   then
     ssh $server mkdir -p $remotePath </dev/null
     scp -rC $DIR/transfer.tar.gz "$server:$remotePath" >/tmp/tmp_scp_log.txt </dev/null
@@ -45,9 +45,10 @@ do
     ssh $server mv $remotePath/RemoteSubScritps/* $remotePath/ </dev/null
     ssh $server rm -r $remotePath/RemoteSubScritps </dev/null
     ssh $server rm $remotePath/transfer.tar.gz </dev/null
+
+    echo "$server -> Done."
   fi
 
-  echo "$server -> Done."
 done < $input
 
 wait

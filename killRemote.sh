@@ -11,6 +11,9 @@ findServer(){
   input=$1
   declare -i wordCount
 
+  server=""
+  serverPath=""
+
   while IFS= read -r line
   do
     if [[ $i -eq $n ]]; then
@@ -45,8 +48,9 @@ if [[ -n $server_index ]]; then
   findServer "$DIR/remoteAddresses.txt" "$server_index"
   echo $server
   echo $serverPath
-
-  ssh $server "$serverPath/kill.sh" $2 </dev/null
+  if [[ -n $server ]] && [[ ${server:0:1} != "#" ]]; then
+    ssh $server "$serverPath/kill.sh" $2 </dev/null
+  fi
 else
   input="$DIR/remoteAddresses.txt"
   while IFS= read -r line
@@ -59,14 +63,20 @@ else
       wordCount=$wordCount+1
     done
 
+    server=""
+    serverPath=""
+
     if [[ $wordCount -eq 3 ]]; then
       server=${tempArr[0]}
       serverPath=${tempArr[2]}
-      ssh $server "$serverPath/kill.sh" $2 </dev/null
     elif [[ $wordCount -eq 2 ]]; then
       server=${tempArr[0]}
       serverPath="Desktop/RemoteGamesFiles"
-      ssh $server "$serverPath/kill.sh" $2 </dev/null
     fi
+
+    if [[ -n $server ]] && [[ ${server:0:1} != "#" ]]; then
+      ssh $server "$serverPath/kill.sh" </dev/null
+    fi
+
   done < $input
 fi

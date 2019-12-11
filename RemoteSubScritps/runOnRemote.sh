@@ -54,8 +54,7 @@ readFileAndRun(){
         flag=1
       fi
 
-      if [ $flag -eq 0 ]
-      then
+      if [[ $flag -eq 0 ]] && [[ -n $server ]] && [[ ${server:0:1} != "#" ]]; then
         ssh $server "$serverPath/remoteRun.sh" $t1 $t2 $port $tag </dev/null
       fi
     fi
@@ -73,6 +72,9 @@ findServer(){
   declare -i n=$2
   input=$1
   declare -i wordCount
+
+  server=""
+  serverPath=""
 
   while IFS= read -r line
   do
