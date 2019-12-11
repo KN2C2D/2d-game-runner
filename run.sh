@@ -71,7 +71,6 @@ makeTag(){
   fi
 
   echo "$tag --- $D: $Team1-$rt1-vs-$Team2-$rt2" >>results/Results.txt
-fi
 }
 #####################################
 
