@@ -110,7 +110,7 @@ do
   if [[ $count -gt 1 ]] && [[ $count -lt 4 ]] && [[ ${W[0]:0:1} != "#" ]]
   then
     lim=`expr ${W[1]}`
-
+    port=$ssp
     for (( i=0; i < lim; i++ )); do
       $DIR/RemoteSubScritps/runOnRemote.sh $remote_index $port $n $m &
       port=$port+$spd
@@ -124,12 +124,3 @@ done < $input
 wait
 
 rm -r proc.txt
-
-# declare -i i
-# declare -i port=$ssp
-# for (( i= 0; i<n; i++)) ; do
-#   ./runOnPort.sh $port $n $i &
-#   port=$port+$spd
-# done
-# wait
-# rm -r proc.txt
