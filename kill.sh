@@ -24,11 +24,9 @@ readFileAndKill(){
     #arr[2] ---> pid of process 
     if ! [[ -n $port ]] ; then
   	  kill ${arr[2]}
-    else
- 	  if [ $port = ${arr[1]} ] ; then 
+    elif [ $port = ${arr[1]} ] ; then 
  	    kill ${arr[2]}
- 	  fi
-    fi 
+ 	  fi 
   done < $1
 } 
 ###############################

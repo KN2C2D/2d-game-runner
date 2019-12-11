@@ -5,7 +5,6 @@
 #$4 ---> tag
 
 DIR=`dirname $0`
-cd $DIR
 #############################variables
 declare -i port=$3
 declare -i coach_port=$3+1
@@ -28,18 +27,19 @@ runServerAndAgents(){
     teamsDIR=$DIR/teams
   fi
   #running Games
-  ../$teamsDIR/$Team1/startAll $port &
-  ../$teamsDIR/$Team2/startAll $port &
+  $DIR/$teamsDIR/$Team1/startAll $port &
+  $DIR/$teamsDIR/$Team2/startAll $port &
   rcssserver server::synch_mode=true server::verbose=off server::port=$port \
   server::coach_port=$coach_port server::olcoach_port=$olcoach_port \
-  server::auto_mode=true  &
-  echo "server $port $!" >> ../proc.txt
+  server::text_log_dir="$DIR/$tmpDirName" server::game_log_dir="$DIR/$tmpDirName" \
+  server::auto_mode=true &
+  echo "server $port $!" >> $DIR/proc.txt
   wait
 }
 findResults(){
   #extracting results from log files to adding to new log files
   declare -i i=0
-  tmp=`ls *.rcg`
+  tmp=`ls $DIR/$tmpDirName/*.rcg`
   i=`expr index $tmp "_"`
   tmp=${tmp:$i}
   i=`expr index $tmp "-vs"`
@@ -53,9 +53,9 @@ findResults(){
 createResultDirectory(){
   if [[  $resultDIR = "" ]] ; then
     if ! [ -d results ] ; then
-      mkdir results
+      mkdir $DIR/results
     fi
-    resultDIR=results
+    resultDIR=$DIR/results
   fi
 }
 makeTag(){
@@ -65,12 +65,12 @@ makeTag(){
       mkdir $resultDIR/$tag
     fi
 
-    mv $tmpDirName/$logName.rc? $resultDIR/$tag
+    mv $DIR/$tmpDirName/$logName.rc? $resultDIR/$tag
   else
-    mv $tmpDirName/$logName.rc? $resultDIR/
+    mv $DIR/$tmpDirName/$logName.rc? $resultDIR/
   fi
 
-  echo "$tag --- $D: $Team1-$rt1-vs-$Team2-$rt2" >>results/Results.txt
+  echo "$tag --- $D: $Team1-$rt1-vs-$Team2-$rt2" >>$resultDIR/Results.txt
 }
 #####################################
 
@@ -79,16 +79,13 @@ makeTag(){
 if ! [ -d $tmpDirName ] ; then  
   mkdir $tmpDirName
 fi
-cd $tmpDirName
 
 runServerAndAgents
 findResults
 logName="$Team1-$rt1-vs-$Team2-$rt2-$D"
 
-mv ./*.rcg "$logName.rcg"
-mv ./*.rcl "$logName.rcl"
-
-cd ..
+mv $DIR/$tmpDirName/*.rcg "$DIR/$tmpDirName/$logName.rcg"
+mv $DIR/$tmpDirName/*.rcl "$DIR/$tmpDirName/$logName.rcl"
 
 createResultDirectory
 

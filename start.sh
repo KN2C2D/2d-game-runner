@@ -13,6 +13,7 @@ declare -i ssp
 declare -i spd
 teamsDIR=""
 resultDIR=""
+DIR=`dirname $0`
 ##############################################methods
 initialize(){
   read -t 10 -p "enter path of teams directory: " teamsDIR
@@ -50,13 +51,13 @@ writePathToFile(){
     resultDIR=`pwd`$resultDIR
   fi
   resultDIR=$resultDIR
-  echo $teamsDIR > path.txt
-  echo $resultDIR >> path.txt
+  echo $teamsDIR > $DIR/path.txt
+  echo $resultDIR >> $DIR/path.txt
 }
 runOnPorts(){
   declare -i i
   for (( i= 0; i<n; i++)) ; do
-    ./runOnPort.sh $port $n $i &
+    $DIR/runOnPort.sh $port $n $i &
     port=$port+$spd
   done
 }
@@ -65,10 +66,8 @@ runOnPorts(){
 initialize
 writePathToFile
 
-DIR=`dirname $0`
-cd $DIR
 # $$ -> the process number of the current shell
-echo "start" $$ > proc.txt
+echo "start" $$ > $DIR/proc.txt
 # running runOnPort script for each set of games (n times)
 declare -i port=$ssp
 runOnPorts

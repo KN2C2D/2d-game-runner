@@ -12,6 +12,7 @@ declare -i n=$2
 declare -i m=$3
 declare -i idx=0
 declare -i flag
+DIR=`dirname $0`
 #########################################methods
 initialize_Arr(){
   for word in $line ; do
@@ -25,21 +26,18 @@ readFileAndRun(){
       idx=0
       initialize_Arr
       if [ $idx -eq 2 ] ; then
-        t1=${Arr[0]}
-        t2=${Arr[1]}
         tag=""
         flag=0
       elif [ $idx -eq 3 ] ; then
-        t1=${Arr[0]}
-        t2=${Arr[1]}
         tag=${Arr[2]}
         flag=0
       else
         flag=1
       fi
-
+      t1=${Arr[0]}
+      t2=${Arr[1]}
       if [ $flag -eq 0 ] ; then
-        ./run.sh $t1 $t2 $port $tag 
+        $DIR/run.sh $t1 $t2 $port $tag 
       fi
     fi
 
@@ -53,10 +51,6 @@ readFileAndRun(){
 #########################################
 
 #$$ : the process number of the current shell
-echo "runOnPort" $port $$ >> proc.txt
-
-DIR=`dirname $0`
-cd $DIR
-input="Games.txt"
-
+echo "runOnPort" $port $$ >> $DIR/proc.txt
+input="$DIR/Games.txt"
 readFileAndRun $input
