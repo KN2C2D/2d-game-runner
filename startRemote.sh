@@ -16,12 +16,12 @@ resultDIR=""
 initialize(){
   read -t 5 -p "enter path of teams directory: " teamsDIR
   if [[ $teamsDIR = "" ]]; then
-    echo
+    echo "$DIR/results"
   fi
   ###########
   read -t 5 -p "enter path of results directory: " resultDIR
   if [[ $resultDIR = "" ]]; then
-    echo
+    echo "$DIR/teams"
   fi
   ############
   read -t 5 -p "enter servers start port: " ssp
@@ -86,7 +86,11 @@ echo "start" $$ > $DIR/proc.txt
 initialize
 countN "$DIR/remoteAddresses.txt"
 writePathToFile
+
+echo ""
+echo "Updating remote servers."
 $DIR/updateRemote.sh
+echo "Remote servers updated."
 
 # running runOnPort script for each set of games (n times)
 declare -i m=0

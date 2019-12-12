@@ -23,12 +23,12 @@ rt2=""
 ################################################################################
 runServerAndAgents(){
   #running Games
-  $DIR/teams/$Team1/startAll $port &> serverLog.txt &
-  $DIR/teams/$Team2/startAll $port &> serverLog.txt &
+  $DIR/teams/$Team1/startAll $port &> $DIR/serverLog.txt &
+  $DIR/teams/$Team2/startAll $port &> $DIR/serverLog.txt &
   rcssserver server::synch_mode=true server::verbose=off server::port=$port \
   server::coach_port=$coach_port server::olcoach_port=$olcoach_port \
   server::auto_mode=true server::text_log_dir="$DIR/$tmpDirName"\
-  server::game_log_dir="$DIR/$tmpDirName" &> serverLog.txt &
+  server::game_log_dir="$DIR/$tmpDirName" &> $DIR/serverLog.txt &
   echo "server $port $!" >> $DIR/proc.txt
   wait
 }
@@ -65,7 +65,7 @@ tagging(){
   ssh $master mkdir -p $RESULTS_PATH
   ssh $master "echo "$tag---$D:$Team1--vs--$Team2:$rt1--$rt2"\
   >>$RESULTS_PATH/Results.txt" </dev/null
-  scp -r $DIR/results/* $master:$RESULTS_PATH </dev/null
+  scp -r $DIR/results/* $master:$RESULTS_PATH </dev/null >/dev/null 2>/dev/null
   rm -r $DIR/results/*
 }
 ################################################################################
@@ -83,7 +83,7 @@ mv $DIR/$tmpDirName/*.rcl "$DIR/$tmpDirName/$logName.rcl"
 
 if ! [ -d results ]
 then
-  mkdir $DIR/results
+  mkdir $DIR/results >/dev/null 2>/dev/null
 fi
 
 tagging
