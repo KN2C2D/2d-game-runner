@@ -58,8 +58,6 @@ tagging(){
     mkdir -p $DIR/results/$tag
 
     mv $DIR/$tmpDirName/$logName.rc? $DIR/results/$tag
-    ssh $master "echo "$tag---$D:$Team1--vs--$Team2:$rt1--$rt2"\
-    >>$RESULTS_PATH/$tag/Results.txt" </dev/null
   else
     mv $DIR/$tmpDirName/$logName.rc? $DIR/results/
   fi
@@ -67,6 +65,13 @@ tagging(){
   ssh $master mkdir -p $RESULTS_PATH
   ssh $master "echo "$tag---$D:$Team1--vs--$Team2:$rt1--$rt2"\
   >>$RESULTS_PATH/Results.txt" </dev/null
+
+  if [[ -n $tag ]]; then
+    ssh $master mkdir -p $RESULTS_PATH/$tag </dev/null >/dev/null 2>/dev/null
+    ssh $master "echo "$tag---$D:$Team1--vs--$Team2:$rt1--$rt2"\
+    >>$RESULTS_PATH/$tag/Results.txt" </dev/null >/dev/null 2>/dev/null
+  fi
+
   scp -r $DIR/results/* $master:$RESULTS_PATH </dev/null >/dev/null 2>/dev/null
   rm -r $DIR/results/*
 }
