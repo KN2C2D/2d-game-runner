@@ -123,4 +123,5 @@ done < $input
 
 wait
 
-rm -r proc.txt
+rm $DIR/proc.txt
+rm $DIR/path.txt

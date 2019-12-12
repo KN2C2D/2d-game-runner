@@ -11,7 +11,7 @@
 echo "runOnPort" $port $$ >> proc.txt
 
 DIR=`dirname $0`
-DIR=`dirname $DIR`
+PARENT_DIR=`dirname $DIR`
 ################################################################################
 declare -i remote_index=$1
 declare -i port=$2
@@ -107,6 +107,6 @@ findServer(){
 
 ################################################################################
 
-findServer "$DIR/remoteAddresses.txt" "$remote_index"
+findServer "$PARENT_DIR/remoteAddresses.txt" "$remote_index"
 
-readFileAndRun "$DIR/Games.txt"
+readFileAndRun "$PARENT_DIR/Games.txt"
