@@ -62,7 +62,7 @@ writePathToFile(){
 runOnPorts(){
   declare -i i
   for (( i= 0; i<n; i++)) ; do
-    $DIR/runOnPort.sh $port $n $i &
+    $DIR/LocalSubScripts/runOnPort.sh $port $n $i &
     port=$port+$spd
   done
 }
@@ -77,4 +77,7 @@ echo "start" $$ > $DIR/proc.txt
 declare -i port=$ssp
 runOnPorts
 
-rm -r proc.txt
+wait
+
+rm $DIR/proc.txt
+rm $DIR/path.txt
