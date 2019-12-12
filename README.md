@@ -1,4 +1,4 @@
-![2d_game](/home/arash/Documents/global_gitlab/cloneRcss2d/rcss2d_game_scripts/2d_game.jpeg)
+![2d_game](./2d_game.jpeg)
 
 
 
