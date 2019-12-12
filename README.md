@@ -1,4 +1,6 @@
-![download](/home/arash/Downloads/download.jpeg)
+![2d_game](/home/arash/Documents/global_gitlab/cloneRcss2d/rcss2d_game_scripts/2d_game.jpeg)
+
+
 
 welcome to the kn2c_rcss_2d repository
 
