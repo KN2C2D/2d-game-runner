@@ -128,4 +128,3 @@ done < $input
 wait
 
 rm $DIR/proc.txt
-rm $DIR/path.txt
