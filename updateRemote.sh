@@ -10,12 +10,15 @@ TEAMS_PATH=`head -n 1 $DIR/path.txt`
 declare -i count
 declare -i runFlag
 
+#compressing and packaging all the files for faster transmit
 echo "Compressing files."
 tar -czf $DIR/transfer.tar.gz $TEAMS_PATH $REMOTE_SCRIPTS_PATH/remoteRun.sh\
  $DIR/path.txt $DIR/masterAddress.txt $DIR/$REMOTE_SCRIPTS_PATH/kill.sh\
  $DIR/$REMOTE_SCRIPTS_PATH/killall.sh
 echo "Files compressed."
 
+#reading remote server addresses and copying and then extracting the package
+#created above and then putting files in the right order
 while IFS= read -r line
 do
   count=0
@@ -53,4 +56,5 @@ done < $input
 
 wait
 
+#removing the package created above
 rm $DIR/transfer.tar.gz

@@ -68,6 +68,9 @@ readFileAndRun(){
 }
 
 findServer(){
+  #gets remoteAddresses path and an index as input
+  #finds the specified server (specification with input index)
+  #return 0 if succesful 1 if failed
   declare -i i=1
   declare -i n=$2
   input=$1
@@ -107,6 +110,7 @@ findServer(){
 
 ################################################################################
 
+#finding the specified server
 findServer "$PARENT_DIR/remoteAddresses.txt" "$remote_index"
 
 readFileAndRun "$PARENT_DIR/Games.txt"

@@ -76,12 +76,13 @@ fi
 
 runServerAndAgents
 findResults
-logName="$Team1--vs--$Team2:$rt1--$rt2--$D"
 
+#making a new log name for the log files
+logName="$Team1--vs--$Team2:$rt1--$rt2--$D"
 mv $DIR/$tmpDirName/*.rcg "$DIR/$tmpDirName/$logName.rcg"
 mv $DIR/$tmpDirName/*.rcl "$DIR/$tmpDirName/$logName.rcl"
 
-if ! [ -d results ]
+if ! [ -d $DIR/results ]
 then
   mkdir $DIR/results >/dev/null 2>/dev/null
 fi

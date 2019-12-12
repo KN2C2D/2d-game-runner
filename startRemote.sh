@@ -92,7 +92,7 @@ echo "Updating remote servers."
 $DIR/updateRemote.sh
 echo "Remote servers updated."
 
-# running runOnPort script for each set of games (n times)
+# running runOnRemote script for each set of games (n times) (each server and port)
 declare -i m=0
 declare -i lim
 input="$DIR/remoteAddresses.txt"
