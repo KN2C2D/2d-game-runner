@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # $1 ---> port that want to kill (optional)
-
 port=$1
 
 DIR=`dirname $0`
@@ -27,7 +26,7 @@ readFileAndKill(){
   	  kill ${arr[2]}
     elif [[ $port = ${arr[1]} ]]; then
  	    kill ${arr[2]}
-    fi
+ 	  fi
   done < $1
 }
 ###############################

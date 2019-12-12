@@ -36,13 +36,13 @@ initialize(){
   fi
   ############
   read -t 5 -p "enter servers start port: " ssp
-  if [ $ssp -eq 0 ] ; then
+  if [[ $ssp -eq 0 ]]; then
     ssp=6000
     echo "ssp=6000"
   fi
   ###########
   read -t 5 -p "enter servers port difference: " spd
-  if [ $spd -eq 0 ] ; then
+  if [[ $spd -eq 0 ]]; then
     spd=10
     echo "spd=10"
   fi
@@ -128,4 +128,3 @@ runOnPorts
 progressBar
 
 rm $DIR/proc.txt
-rm $DIR/path.txt
