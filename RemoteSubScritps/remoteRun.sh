@@ -58,6 +58,8 @@ tagging(){
     mkdir -p $DIR/results/$tag
 
     mv $DIR/$tmpDirName/$logName.rc? $DIR/results/$tag
+    ssh $master "echo "$tag---$D:$Team1--vs--$Team2:$rt1--$rt2"\
+    >>$RESULTS_PATH/$tag/Results.txt" </dev/null
   else
     mv $DIR/$tmpDirName/$logName.rc? $DIR/results/
   fi

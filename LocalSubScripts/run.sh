@@ -61,6 +61,7 @@ makeTag(){
     fi
 
     mv $PARENT_DIR/$tmpDirName/$logName.rc? $resultDIR/$tag
+    echo "$tag --- $D: $Team1-$rt1-vs-$Team2-$rt2" >>$resultDIR/$tag/Results.txt
   else
     mv $PARENT_DIR/$tmpDirName/$logName.rc? $resultDIR/
   fi
