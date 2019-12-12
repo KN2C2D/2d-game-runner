@@ -1,5 +1,5 @@
 #! /bin/bash
-set -o errexit
+
 DIR=`dirname $0`
 input="$DIR/remoteAddresses.txt"
 
