@@ -25,12 +25,12 @@ rt2=""
 ##############################methods
 runServerAndAgents(){
   #running Games
-  $PARENT_DIR/$teamsDIR/$Team1/startAll $port &
-  $PARENT_DIR/$teamsDIR/$Team2/startAll $port &
+  $PARENT_DIR/$teamsDIR/$Team1/startAll $port &> $DIR/serverLog.txt &
+  $PARENT_DIR/$teamsDIR/$Team2/startAll $port &> $DIR/serverLog.txt &
   rcssserver server::synch_mode=true server::verbose=off server::port=$port \
   server::coach_port=$coach_port server::olcoach_port=$olcoach_port \
   server::text_log_dir="$PARENT_DIR/$tmpDirName" server::game_log_dir="$PARENT_DIR/$tmpDirName" \
-  server::auto_mode=true &
+  server::auto_mode=true &> $DIR/serverLog.txt &
   echo "server $port $!" >> $PARENT_DIR/proc.txt
   wait
 }

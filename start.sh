@@ -14,16 +14,19 @@ declare -i spd
 teamsDIR=""
 resultDIR=""
 DIR=`dirname $0`
+declare -i lineOfResults
+declare -i lineOfGames=`wc -l $DIR/Games.txt | awk '{ print $1 }'`
+declare -i firstLines
 ##############################################methods
 initialize(){
   read -t 10 -p "enter path of teams directory: " teamsDIR
   if [[ $teamsDIR = "" ]] ; then
-    echo
+    echo "$DIR/teams"
   fi
   ###########
   read -t 10 -p "enter path of results directory: " resultDIR
   if [[ $resultDIR = "" ]] ; then
-    echo
+    echo "$DIR/results"
   fi
   ###########
   read -t 5 -p "enter number of games running simultaneously: " n
@@ -66,6 +69,51 @@ runOnPorts(){
     port=$port+$spd
   done
 }
+findLineOfResults(){
+  if [ -e $resultDIR/Results.txt ] ; then
+    lineOfResults=`wc -l $resultDIR/Results.txt | awk '{ print $1 }'`
+  else
+    lineOfResults=0
+  fi
+}
+bar(){
+  local items=$1
+  local total=$2
+  local size=$3
+  per=$(($items*$size/$total % $size))
+  left=$(($size-$per))
+  chars=$(local s=$(printf "%${per}s"); echo "${s// /=}")
+  echo -ne "[$chars>";
+  printf "%${left}s"
+  echo -ne ']\r'
+}
+clearbar(){
+  local size=$1
+  printf " %s${size}  "
+  echo -ne "\r"
+}
+progressBar(){
+  declare -i preLine=-1
+  findLineOfResults
+  firstLines=$lineOfResults
+  lineOfResults=0
+  bar 0 100 50
+  while ! [ $lineOfGames -eq $lineOfResults ] ; do
+    findLineOfResults
+    lineOfResults=$lineOfResults-$firstLines
+    declare -i percent=$lineOfResults
+    percent=$percent*100
+    percent=$percent/$lineOfGames
+    if ! [ $lineOfResults -eq $preLine ] ; then
+      echo -n  $percent %
+      bar $percent 100 50
+    fi
+    preLine=$lineOfResults
+  done
+
+  echo "[=======================================================>"
+  echo "Done!"
+}
 ###################################################
 
 initialize
@@ -77,7 +125,7 @@ echo "start" $$ > $DIR/proc.txt
 declare -i port=$ssp
 runOnPorts
 
-wait
+progressBar
 
 rm $DIR/proc.txt
 rm $DIR/path.txt
