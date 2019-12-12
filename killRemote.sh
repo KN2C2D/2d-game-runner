@@ -104,11 +104,6 @@ readFileAndKill(){
 }
 
 ################################################################################
-#Local processes kill
-port=$2
-readFileAndKill "$DIR/proc.txt" $port
-
-################################################################################
 #Remote processes kill
 server_index=$1
 if [[ -n $server_index ]]; then
@@ -117,5 +112,9 @@ if [[ -n $server_index ]]; then
     ssh $server "$serverPath/kill.sh" $2 </dev/null
   fi
 else
+  #Local processes kill
+  port=$2
+  readFileAndKill "$DIR/proc.txt" $port
+
   killall "$DIR/remoteAddresses.txt"
 fi
