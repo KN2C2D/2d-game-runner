@@ -1,0 +1,1 @@
+This is default directory for teams. Teams code should be placed with a folder with their name in this folder and they should have a startAll executable in their folder that runs their players and coach.
