@@ -98,9 +98,11 @@ progressBar(){
   firstLines=$lineOfResults
   lineOfResults=0
   bar 0 100 50
+  lineOfGames=`wc -l $DIR/Games.txt | awk '{ print $1 }'`
   while ! [ $lineOfGames -eq $lineOfResults ] ; do
     findLineOfResults
     lineOfResults=$lineOfResults-$firstLines
+    lineOfGames=`wc -l $DIR/Games.txt | awk '{ print $1 }'`
     declare -i percent=$lineOfResults
     percent=$percent*100
     percent=$percent/$lineOfGames
@@ -117,6 +119,7 @@ progressBar(){
 ###################################################
 
 initialize
+sed -i -r '/^\s*$/d' $DIR/Games.txt
 writePathToFile
 
 # $$ -> the process number of the current shell
