@@ -127,9 +127,13 @@ In the RoboCup repository cited above in this tutorial, download this [file](htt
 Open a terminal and run:
 
 > tar -zxpf soccerwindow2-x.x.x.tar.gz
+>
 > cd soccerwindow2-x.x.x.tar.gz
+>
 > ./configure
+>
 > make
+>
 > sudo make install
 
 ---

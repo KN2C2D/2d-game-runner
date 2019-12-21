@@ -25,12 +25,12 @@ declare -i firstLines
 initialize(){
   read -t 5 -p "enter path of teams directory: " teamsDIR
   if [[ $teamsDIR = "" ]]; then
-    echo "$DIR/results"
+    echo "$DIR/teams"
   fi
 
   read -t 5 -p "enter path of results directory: " resultDIR
   if [[ $resultDIR = "" ]]; then
-    echo "$DIR/teams"
+    echo "$DIR/results"
   fi
 
   read -t 5 -p "enter servers start port: " ssp
