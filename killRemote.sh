@@ -1,10 +1,15 @@
 #! /bin/bash
 
+#Remote processes kill
+
+#input discription
 # $1 ---> remote_index: index of remote server (for this script) in remoteAddresses.txt (optional)
 # $2 ---> port that want to kill (optional)
-################################################################################
+
+#variables
 DIR=`dirname $0`
-################################################################################
+
+#methods
 findServer(){
   #gets remoteAddresses path and an index as input
   #finds the specified server (specification with input index)
@@ -103,18 +108,22 @@ readFileAndKill(){
   done < $input
 }
 
-################################################################################
-#Remote processes kill
-server_index=$1
-if [[ -n $server_index ]]; then
-  findServer "$DIR/remoteAddresses.txt" "$server_index"
-  if [[ -n $server ]] && [[ ${server:0:1} != "#" ]]; then
-    ssh $server "$serverPath/kill.sh" $2 </dev/null
-  fi
-else
-  #Local processes kill
-  port=$2
-  readFileAndKill "$DIR/proc.txt" $port
+#main method
+main() {
+  server_index=$1
+  if [[ -n $server_index ]]; then
+    findServer "$DIR/remoteAddresses.txt" "$server_index"
+    if [[ -n $server ]] && [[ ${server:0:1} != "#" ]]; then
+      ssh $server "$serverPath/kill.sh" $2 </dev/null
+    fi
+  else
+    #Local processes kill
+    port=$2
+    readFileAndKill "$DIR/proc.txt" $port
 
-  killall "$DIR/remoteAddresses.txt"
-fi
+    killall "$DIR/remoteAddresses.txt"
+  fi
+}
+
+#
+main

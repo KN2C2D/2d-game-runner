@@ -1,39 +1,44 @@
 #! /bin/bash
 
+#input discription
 # n : number of games running simultaneously
 # ssp (optional) : servers start port - first server will be run on
 #           this port and the number will be increased for next server and so on
 # spd (optional) : servers port difference - the port number will be
 #           increased by sdp from each server to the next
 
-#######################################################################variables
+#variables
+DIR=`dirname $0`
+
 declare -i n
 declare -i ssp
 declare -i spd
+
 teamsDIR=""
 resultDIR=""
-DIR=`dirname $0`
+
 declare -i lineOfResults
 declare -i lineOfGames=`wc -l $DIR/Games.txt | awk '{ print $1 }'`
 declare -i firstLines
-#########################################################################methods
+
+#methods
 initialize(){
   read -t 5 -p "enter path of teams directory: " teamsDIR
   if [[ $teamsDIR = "" ]]; then
     echo "$DIR/results"
   fi
-  ###########
+
   read -t 5 -p "enter path of results directory: " resultDIR
   if [[ $resultDIR = "" ]]; then
     echo "$DIR/teams"
   fi
-  ############
+
   read -t 5 -p "enter servers start port: " ssp
   if [[ $ssp -eq 0 ]]; then
     ssp=6000
     echo "ssp=6000"
   fi
-  ###########
+
   read -t 5 -p "enter servers port difference: " spd
   if [[ $spd -eq 0 ]]; then
     spd=10
@@ -130,51 +135,58 @@ progressBar(){
   echo "[=======================================================>"
   echo "Done!"
 }
-################################################################################
-echo "start" $$ > $DIR/proc.txt
 
-initialize
-countN "$DIR/remoteAddresses.txt"
-writePathToFile
+#main method
+main() {
+  #storing PID
+  echo "start" $$ > $DIR/proc.txt
 
-echo ""
-echo "Updating remote servers."
-$DIR/updateRemote.sh
-echo "Remote servers updated."
+  initialize
+  countN "$DIR/remoteAddresses.txt"
+  writePathToFile
 
-# running runOnRemote script for each set of games (n times) (each server and port)
-declare -i m=0
-declare -i lim
-input="$DIR/remoteAddresses.txt"
-declare -i count
-declare -i i
-declare -i port=$ssp
-declare -i remote_index=1
+  echo ""
+  echo "Updating remote servers."
+  $DIR/updateRemote.sh
+  echo "Remote servers updated."
 
-while IFS= read -r line
-do
-  count=0
+  # running runOnRemote script for each set of games (n times) (each server and port)
+  declare -i m=0
+  declare -i lim
+  input="$DIR/remoteAddresses.txt"
+  declare -i count
+  declare -i i
+  declare -i port=$ssp
+  declare -i remote_index=1
 
-  for word in $line
+  while IFS= read -r line
   do
-    W[count]=$word
-    count+=1
-  done
+    count=0
 
-  if [[ $count -gt 1 ]] && [[ $count -lt 4 ]] && [[ ${W[0]:0:1} != "#" ]]
-  then
-    lim=`expr ${W[1]}`
-    port=$ssp
-    for (( i=0; i < lim; i++ )); do
-      $DIR/RemoteSubScritps/runOnRemote.sh $remote_index $port $n $m &
-      port=$port+$spd
-      m+=1
+    for word in $line
+    do
+      W[count]=$word
+      count+=1
     done
-  fi
 
-  remote_index+=1
-done < $input
+    if [[ $count -gt 1 ]] && [[ $count -lt 4 ]] && [[ ${W[0]:0:1} != "#" ]]
+    then
+      lim=`expr ${W[1]}`
+      port=$ssp
+      for (( i=0; i < lim; i++ )); do
+        $DIR/RemoteSubScritps/runOnRemote.sh $remote_index $port $n $m &
+        port=$port+$spd
+        m+=1
+      done
+    fi
 
-progressBar
+    remote_index+=1
+  done < $input
 
-rm $DIR/proc.txt
+  progressBar
+
+  rm $DIR/proc.txt
+}
+
+#
+main

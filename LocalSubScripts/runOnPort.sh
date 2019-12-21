@@ -1,11 +1,12 @@
 #! /bin/bash
 
-# run run script for k * n + m games from Games.txt on specifiedn port
-#######################################input
+# run run.sh script for k * n + m games from Games.txt on specifiedn port
+#input discription
 # $1 -> Port for the games to be run on
 # $2 -> n
 # $3 -> m
-######################################variables
+
+#variables
 declare -i port=$1
 declare -i i=0
 declare -i n=$2
@@ -14,13 +15,15 @@ declare -i idx=0
 declare -i flag
 DIR=`dirname $0`
 PARENT_DIR=`dirname $DIR`
-#########################################methods
+
+#methods
 initialize_Arr(){
   for word in $line ; do
     Arr[$idx]=$word
     idx=$idx+1
   done
 }
+
 readFileAndRun(){
   while IFS= read -r line ; do
     if [ $i -eq $m ] ; then
@@ -49,9 +52,13 @@ readFileAndRun(){
   done < $1
 }
 
-#########################################
+#main method
+main(){
+  #$$ : the process number of the current shell
+  echo "runOnPort" $port $$ >> $PARENT_DIR/proc.txt
+  input="$PARENT_DIR/Games.txt"
+  readFileAndRun $input
+}
 
-#$$ : the process number of the current shell
-echo "runOnPort" $port $$ >> $PARENT_DIR/proc.txt
-input="$PARENT_DIR/Games.txt"
-readFileAndRun $input
+#
+main

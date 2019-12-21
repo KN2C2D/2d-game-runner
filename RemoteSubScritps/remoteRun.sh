@@ -1,10 +1,12 @@
 #! /bin/bash
 
+#input discription
 #$1 ---> team1
 #$2 ---> team2
 #$3 ---> port
 #$4 ---> tag
-################################################################################
+
+#variables
 DIR=`dirname $0`
 
 declare -i port=$3
@@ -15,12 +17,16 @@ tag=$4
 
 Team1=$1
 Team2=$2
-#finding date for adding to log files
-D="$(date +%Y%m%d%H%M%S)"
-tmpDirName="$Team1-$Team2"
-rt1=""
-rt2=""
-################################################################################
+
+#methods
+findDate() {
+  #finding date for adding to log files
+  D="$(date +%Y%m%d%H%M%S)"
+  tmpDirName="$Team1-$Team2"
+  rt1=""
+  rt2=""
+}
+
 runServerAndAgents(){
   #running Games
   $DIR/teams/$Team1/startAll $port &> $DIR/serverLog.txt &
@@ -75,25 +81,32 @@ tagging(){
   scp -r $DIR/results/* $master:$RESULTS_PATH </dev/null >/dev/null 2>/dev/null
   rm -r $DIR/results/*
 }
-################################################################################
-if ! [ -d $DIR/$tmpDirName ]
-then
-  mkdir $DIR/$tmpDirName
-fi
 
-runServerAndAgents
-findResults
+#main method
+main() {
+  if ! [ -d $DIR/$tmpDirName ]
+  then
+    mkdir $DIR/$tmpDirName
+  fi
 
-#making a new log name for the log files
-logName="$Team1--vs--$Team2:$rt1--$rt2--$D"
-mv $DIR/$tmpDirName/*.rcg "$DIR/$tmpDirName/$logName.rcg"
-mv $DIR/$tmpDirName/*.rcl "$DIR/$tmpDirName/$logName.rcl"
+  runServerAndAgents
+  findResults
+  findDate
 
-if ! [ -d $DIR/results ]
-then
-  mkdir $DIR/results >/dev/null 2>/dev/null
-fi
+  #making a new log name for the log files
+  logName="$Team1--vs--$Team2:$rt1--$rt2--$D"
+  mv $DIR/$tmpDirName/*.rcg "$DIR/$tmpDirName/$logName.rcg"
+  mv $DIR/$tmpDirName/*.rcl "$DIR/$tmpDirName/$logName.rcl"
 
-tagging
+  if ! [ -d $DIR/results ]
+  then
+    mkdir $DIR/results >/dev/null 2>/dev/null
+  fi
 
-rm -rf $DIR/$tmpDirName
+  tagging
+
+  rm -rf $DIR/$tmpDirName
+}
+
+#
+main
