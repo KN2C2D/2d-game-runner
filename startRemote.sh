@@ -20,12 +20,12 @@ declare -i firstLines
 initialize(){
   read -t 5 -p "enter path of teams directory: " teamsDIR
   if [[ $teamsDIR = "" ]]; then
-    echo "$DIR/results"
+    echo "$DIR/teams"
   fi
   ###########
   read -t 5 -p "enter path of results directory: " resultDIR
   if [[ $resultDIR = "" ]]; then
-    echo "$DIR/teams"
+    echo "$DIR/results"
   fi
   ############
   read -t 5 -p "enter servers start port: " ssp
@@ -114,9 +114,11 @@ progressBar(){
   firstLines=$lineOfResults
   lineOfResults=0
   bar 0 100 50
+  lineOfGames=`wc -l $DIR/Games.txt | awk '{ print $1 }'`
   while ! [ $lineOfGames -eq $lineOfResults ] ; do
     findLineOfResults
     lineOfResults=$lineOfResults-$firstLines
+    lineOfGames=`wc -l $DIR/Games.txt | awk '{ print $1 }'`
     declare -i percent=$lineOfResults
     percent=$percent*100
     percent=$percent/$lineOfGames
@@ -133,6 +135,7 @@ progressBar(){
 ################################################################################
 echo "start" $$ > $DIR/proc.txt
 
+sed -i -r '/^\s*$/d' $DIR/Games.txt
 initialize
 countN "$DIR/remoteAddresses.txt"
 writePathToFile

@@ -17,7 +17,7 @@ Team1=$1
 Team2=$2
 #finding date for adding to log files
 D="$(date +%Y%m%d%H%M%S)"
-tmpDirName="$Team1-$Team2"
+tmpDirName="$Team1-$Team2-`date +%d%H%M%S%N`"
 rt1=""
 rt2=""
 ################################################################################
@@ -73,7 +73,7 @@ tagging(){
   fi
 
   scp -r $DIR/results/* $master:$RESULTS_PATH </dev/null >/dev/null 2>/dev/null
-  rm -r $DIR/results/*
+  rm -r $DIR/results/* >/dev/null 2>/dev/null
 }
 ################################################################################
 if ! [ -d $DIR/$tmpDirName ]
