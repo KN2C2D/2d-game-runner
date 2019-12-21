@@ -14,17 +14,17 @@ declare -i coach_port=$3+1
 declare -i olcoach_port=$3+2
 
 tag=$4
-teamsDIR=`head -n 1 path.txt`
-resultDIR=`tail -n 1 path.txt`
-
 Team1=$1
 Team2=$2
+
+teamsDIR=`head -n 1 path.txt`
+resultDIR=`tail -n 1 path.txt`
+tmpDirName="$Team1-$Team2-`date +%d%H%M%S%N`"
 
 #methods
 findDate(){
   #finding date for adding to log files
   D="$(date +%Y%m%d%H%M%S)"
-  tmpDirName="$Team1-$Team2"
   rt1=""
   rt2=""
 }
