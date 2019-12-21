@@ -118,8 +118,8 @@ progressBar(){
 }
 ###################################################
 
-initialize
 sed -i -r '/^\s*$/d' $DIR/Games.txt
+initialize
 writePathToFile
 
 # $$ -> the process number of the current shell

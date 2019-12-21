@@ -19,7 +19,7 @@ Team1=$1
 Team2=$2
 #finding date for adding to log files
 D="$(date +%Y%m%d%H%M%S)"
-tmpDirName="$Team1-$Team2"
+tmpDirName="$Team1-$Team2-`date +%d%H%M%S%N`"
 rt1=""
 rt2=""
 ##############################methods
@@ -61,12 +61,12 @@ makeTag(){
     fi
 
     mv $PARENT_DIR/$tmpDirName/$logName.rc? $resultDIR/$tag
-    echo "$tag --- $D: $Team1-$rt1-vs-$Team2-$rt2" >>$resultDIR/$tag/Results.txt
+    echo "$tag---$D:$Team1--vs--$Team2:$rt1--$rt2" >>$resultDIR/$tag/Results.txt
   else
     mv $PARENT_DIR/$tmpDirName/$logName.rc? $resultDIR/
   fi
 
-  echo "$tag --- $D: $Team1-$rt1-vs-$Team2-$rt2" >>$resultDIR/Results.txt
+  echo "$tag---$D:$Team1--vs--$Team2:$rt1--$rt2" >>$resultDIR/Results.txt
 }
 #####################################
 
