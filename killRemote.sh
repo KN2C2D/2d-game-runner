@@ -97,9 +97,10 @@ readFileAndKill(){
     #arr[2] ---> pid of process
     if ! [[ -n $port ]]; then
   	  kill ${arr[2]}
-    elif [[ $port = ${arr[1]} ]]; then
+    elif [[ $port = ${arr[1]} ]] && [[ ${arr[0]} = "server" ]]; then
+      echo ${arr[1]} > $DIR/killed.txt
  	    kill ${arr[2]}
- 	  fi
+    fi
   done < $input
 }
 
@@ -120,4 +121,4 @@ main(){
   fi
 }
 #
-main
+main $1 $2
