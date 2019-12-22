@@ -53,8 +53,18 @@ createResultDirectory(){
     mkdir $resultDIR
   fi
 }
+readFromKilled(){
+  if [ -e $PARENT_DIR/killed.txt ] ; then
+    declare -i killed=`head -n 1 $PARENT_DIR/killed.txt`
+    if [[ $killed = $port ]] ; then
+      tag="KILLED"
+      rm $PARENT_DIR/killed.txt
+    fi
+  fi
+}
 makeTag(){
   #tagging
+  readFromKilled
   if [ -n $tag ] ; then
     if ! [ -d $resultDIR/$tag ] ; then
       mkdir $resultDIR/$tag

@@ -25,8 +25,9 @@ readFileAndKill(){
     #arr[2] ---> pid of process
     if ! [[ -n $port ]]; then
   	  kill ${arr[2]}
-    elif [[ $port = ${arr[1]} ]]; then
+    elif [[ $port = ${arr[1]} ]] && [[ ${arr[0]} = "server" ]]; then
  	    kill ${arr[2]}
+      echo ${arr[1]} > killed.txt
     fi
   done < $1
 }
