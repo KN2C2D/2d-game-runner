@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # $1 ---> port that want to kill (optional)
+
 port=$1
 
 DIR=`dirname $0`
@@ -24,9 +25,10 @@ readFileAndKill(){
     #arr[2] ---> pid of process
     if ! [[ -n $port ]]; then
   	  kill ${arr[2]}
-    elif [[ $port = ${arr[1]} ]]; then
+    elif [[ $port = ${arr[1]} ]] && [[ ${arr[0]} = "server" ]]; then
+      echo ${arr[1]} > $DIR/killed.txt
  	    kill ${arr[2]}
- 	  fi
+    fi
   done < $1
 }
 ###############################

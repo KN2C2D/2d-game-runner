@@ -12,8 +12,8 @@ declare -i coach_port=$3+1
 declare -i olcoach_port=$3+2
 
 tag=$4
-teamsDIR=`head -n 1 path.txt`
-resultDIR=`tail -n 1 path.txt`
+teamsDIR=`head -n 1 $PARENT_DIR/path.txt`
+resultDIR=`tail -n 1 $PARENT_DIR/path.txt`
 
 Team1=$1
 Team2=$2
@@ -22,7 +22,7 @@ D="$(date +%Y%m%d%H%M%S)"
 tmpDirName="$Team1-$Team2-`date +%d%H%M%S%N`"
 rt1=""
 rt2=""
-##############################methods
+##############################methods.
 runServerAndAgents(){
   #running Games
   $PARENT_DIR/$teamsDIR/$Team1/startAll $port &> $DIR/serverLog.txt &

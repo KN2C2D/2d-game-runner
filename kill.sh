@@ -26,8 +26,8 @@ readFileAndKill(){
     if ! [[ -n $port ]]; then
   	  kill ${arr[2]}
     elif [[ $port = ${arr[1]} ]] && [[ ${arr[0]} = "server" ]]; then
+      echo ${arr[1]} > $DIR/killed.txt
  	    kill ${arr[2]}
-      echo ${arr[1]} > killed.txt
     fi
   done < $1
 }

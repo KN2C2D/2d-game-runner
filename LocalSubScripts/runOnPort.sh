@@ -44,7 +44,7 @@ readFileAndRun(){
       if [ $flag -eq 0 ] ; then
         $DIR/run.sh $t1 $t2 $port $tag
       fi
-    fi
+    fi  
 
     i=$i+1
     if [ $i -eq $n ] ; then

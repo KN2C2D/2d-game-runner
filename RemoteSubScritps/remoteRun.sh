@@ -48,8 +48,19 @@ findResults(){
   rt2=${tmp:0:i-1}
 }
 
+readFromKilled(){
+  if [ -e $DIR/killed.txt ] ; then
+    declare -i killed=`head -n 1 $DIR/killed.txt`
+    if [[ $killed = $port ]] ; then
+      tag="KILLED"
+      rm $DIR/killed.txt
+    fi
+  fi
+}
+
 tagging(){
   #tagging and saving results in proper format
+  readFromKilled
   RESULTS_PATH=`tail -n 1 $DIR/path.txt`
   master=`head -n 1 $DIR/masterAddress.txt`
 
