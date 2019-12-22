@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# input discription
 # $1 ---> port that want to kill (optional)
 
 port=$1
@@ -8,15 +9,17 @@ DIR=`dirname $0`
 input="$DIR/proc.txt"
 
 declare -i index=0
+
 #methods
-initializeArr(){
+initializeArr() {
   index=0
   for var in $line ; do
  		arr[$index]=$var
  		index=$index+1
   done
 }
-readFileAndKill(){
+
+readFileAndKill() {
   while IFS= read -r line ; do
     echo $line
     initializeArr
@@ -31,8 +34,9 @@ readFileAndKill(){
     fi
   done < $1
 }
+
 #main method
-main(){
+main() {
   readFileAndKill $input
 }
 

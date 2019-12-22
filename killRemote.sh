@@ -1,11 +1,13 @@
 #! /bin/bash
 
+# input discription
 # $1 ---> remote_index: index of remote server (for this script) in remoteAddresses.txt (optional)
 # $2 ---> port that want to kill (optional)
 
 DIR=`dirname $0`
+
 #methods
-findServer(){
+findServer() {
   #gets remoteAddresses path and an index as input
   #finds the specified server (specification with input index)
   #return 0 if succesful 1 if failed
@@ -46,7 +48,7 @@ findServer(){
   return 1
 }
 
-killall(){
+killall() {
   input=$1
 
   while IFS= read -r line
@@ -77,7 +79,7 @@ killall(){
   done < $input
 }
 
-initializeArr(){
+initializeArr() {
   declare -i idx=0
 
   for var in $line ; do
@@ -86,7 +88,7 @@ initializeArr(){
   done
 }
 
-readFileAndKill(){
+readFileAndKill() {
   input=$1
   port=$2
 
@@ -105,7 +107,7 @@ readFileAndKill(){
 }
 
 #main method
-main(){
+main() {
   server_index=$1
   if [[ -n $server_index ]]; then
     findServer "$DIR/remoteAddresses.txt" "$server_index"
@@ -120,5 +122,6 @@ main(){
     killall "$DIR/remoteAddresses.txt"
   fi
 }
+
 #
 main $1 $2

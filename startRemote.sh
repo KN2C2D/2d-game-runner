@@ -1,5 +1,6 @@
 #! /bin/bash
 
+# input discription
 # n : number of games running simultaneously
 # ssp (optional) : servers start port - first server will be run on
 #           this port and the number will be increased for next server and so on
@@ -16,8 +17,9 @@ DIR=`dirname $0`
 declare -i lineOfResults
 declare -i lineOfGames=`wc -l $DIR/Games.txt | awk '{ print $1 }'`
 declare -i firstLines
+
 #methods
-initialize(){
+initialize() {
   read -t 5 -p "enter path of teams directory: " teamsDIR
   if [[ $teamsDIR = "" ]]; then
     echo "$DIR/teams"
@@ -41,7 +43,7 @@ initialize(){
   fi
 }
 
-writePathToFile(){
+writePathToFile() {
   if [[ $resultDIR = "" ]] ; then
     resultDIR=$DIR/results
   fi
@@ -59,7 +61,7 @@ writePathToFile(){
   echo $resultDIR >> $DIR/path.txt
 }
 
-countN(){
+countN() {
   input=$1
   declare -i m=0
   declare -i count
@@ -82,7 +84,7 @@ countN(){
   n=$m
 }
 
-findLineOfResults(){
+findLineOfResults() {
   if [ -e $resultDIR/Results.txt ] ; then
     lineOfResults=`wc -l $resultDIR/Results.txt | awk '{ print $1 }'`
   else
@@ -90,7 +92,7 @@ findLineOfResults(){
   fi
 }
 
-bar(){
+bar() {
   local items=$1
   local total=$2
   local size=$3
@@ -102,13 +104,13 @@ bar(){
   echo -ne ']\r'
 }
 
-clearbar(){
+clearbar() {
   local size=$1
   printf " %s${size}  "
   echo -ne "\r"
 }
 
-progressBar(){
+progressBar() {
   declare -i preLine=-1
   findLineOfResults
   firstLines=$lineOfResults
@@ -132,8 +134,9 @@ progressBar(){
   echo "[=======================================================>"
   echo "Done!"
 }
+
 #main method
-main(){
+main() {
   echo "start" $$ > $DIR/proc.txt
 
   sed -i -r '/^\s*$/d' $DIR/Games.txt

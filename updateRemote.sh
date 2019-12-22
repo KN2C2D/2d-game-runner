@@ -1,6 +1,6 @@
 #! /bin/bash
 
-#variables
+#Global Variables
 DIR=`dirname $0`
 input="$DIR/remoteAddresses.txt"
 

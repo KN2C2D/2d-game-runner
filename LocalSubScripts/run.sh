@@ -6,6 +6,7 @@
 
 DIR=`dirname $0`
 PARENT_DIR=`dirname $DIR`
+
 #global variables
 declare -i port=$3
 declare -i coach_port=$3+1
@@ -17,13 +18,15 @@ resultDIR=`tail -n 1 $PARENT_DIR/path.txt`
 
 Team1=$1
 Team2=$2
+
 #finding date for adding to log files
 D="$(date +%Y%m%d%H%M%S)"
 tmpDirName="$Team1-$Team2-`date +%d%H%M%S%N`"
 rt1=""
 rt2=""
+
 #methods.
-runServerAndAgents(){
+runServerAndAgents() {
   #running Games
   $teamsDIR/$Team1/startAll $port &> $DIR/serverLog.txt &
   $teamsDIR/$Team2/startAll $port &> $DIR/serverLog.txt &
@@ -34,7 +37,8 @@ runServerAndAgents(){
   echo "server $port $!" >> $PARENT_DIR/proc.txt
   wait
 }
-findResults(){
+
+findResults() {
   #extracting results from log files to adding to new log files
   declare -i i=0
   tmp=`ls $PARENT_DIR/$tmpDirName/*.rcg`
@@ -48,12 +52,14 @@ findResults(){
   i=`expr index $tmp "."`
   rt2=${tmp:0:i-1}
 }
-createResultDirectory(){
+
+createResultDirectory() {
   if ! [ -d $resultDIR ] ; then
     mkdir $resultDIR
   fi
 }
-readFromKilled(){
+
+readFromKilled() {
   if [ -e $PARENT_DIR/killed.txt ] ; then
     declare -i killed=`head -n 1 $PARENT_DIR/killed.txt`
     if [[ $killed = $port ]] ; then
@@ -62,7 +68,8 @@ readFromKilled(){
     fi
   fi
 }
-makeTag(){
+
+makeTag() {
   #tagging
   readFromKilled
   if [ -n $tag ] ; then
@@ -78,8 +85,9 @@ makeTag(){
 
   echo "$tag---$D:$Team1--vs--$Team2:$rt1--$rt2" >>$resultDIR/Results.txt
 }
+
 #main method
-main(){
+main() {
   if ! [ -d $tmpDirName ] ; then
     mkdir $tmpDirName
   fi

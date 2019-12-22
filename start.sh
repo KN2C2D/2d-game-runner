@@ -1,5 +1,6 @@
 #! /bin/bash
 
+# input discription
 # n : number of games running simultaneously
 # global_tag (optional): Game results will be saved on results/global_tag
 # ssp (optional) : servers start port - first server will be run on
@@ -17,8 +18,9 @@ DIR=`dirname $0`
 declare -i lineOfResults
 declare -i lineOfGames=`wc -l $DIR/Games.txt | awk '{ print $1 }'`
 declare -i firstLines
+
 #methods
-initialize(){
+initialize() {
   read -t 10 -p "enter path of teams directory: " teamsDIR
   if [[ $teamsDIR = "" ]] ; then
     echo "$DIR/teams"
@@ -34,20 +36,21 @@ initialize(){
     n=1
     echo "n=1"
   fi
-  
+
   read -t 5 -p "enter servers start port: " ssp
   if [[ $ssp -eq 0 ]]; then
     ssp=6000
     echo "ssp=6000"
   fi
-  
+
   read -t 5 -p "enter servers port difference: " spd
   if [[ $spd -eq 0 ]]; then
     spd=10
     echo "spd=10"
   fi
 }
-writePathToFile(){
+
+writePathToFile() {
   if [[ $resultDIR = "" ]] ; then
     resultDIR=$DIR/results
   fi
@@ -62,21 +65,24 @@ writePathToFile(){
   echo $teamsDIR > $DIR/path.txt
   echo $resultDIR >> $DIR/path.txt
 }
-runOnPorts(){
+
+runOnPorts() {
   declare -i i
   for (( i= 0; i<n; i++)) ; do
     $DIR/LocalSubScripts/runOnPort.sh $port $n $i &
     port=$port+$spd
   done
 }
-findLineOfResults(){
+
+findLineOfResults() {
   if [ -e $resultDIR/Results.txt ] ; then
     lineOfResults=`wc -l $resultDIR/Results.txt | awk '{ print $1 }'`
   else
     lineOfResults=0
   fi
 }
-bar(){
+
+bar() {
   local items=$1
   local total=$2
   local size=$3
@@ -87,12 +93,14 @@ bar(){
   printf "%${left}s"
   echo -ne ']\r'
 }
-clearbar(){
+
+clearbar() {
   local size=$1
   printf " %s${size}  "
   echo -ne "\r"
 }
-progressBar(){
+
+progressBar() {
   declare -i preLine=-1
   findLineOfResults
   firstLines=$lineOfResults
@@ -116,8 +124,9 @@ progressBar(){
   echo "[=======================================================>"
   echo "Done!"
 }
+
 #main method
-main(){
+main() {
   sed -i -r '/^\s*$/d' $DIR/Games.txt
   initialize
   writePathToFile
