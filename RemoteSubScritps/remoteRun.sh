@@ -51,7 +51,7 @@ readFromKilled(){
     declare -i killed=`head -n 1 $DIR/killed.txt`
     if [[ $killed = $port ]] ; then
       tag="KILLED"
-      #rm $DIR/killed.txt
+      rm $DIR/killed.txt
     fi
   fi
 }
