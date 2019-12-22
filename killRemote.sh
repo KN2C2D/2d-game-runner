@@ -1,14 +1,9 @@
 #! /bin/bash
 
-#Remote processes kill
-
-#input discription
 # $1 ---> remote_index: index of remote server (for this script) in remoteAddresses.txt (optional)
 # $2 ---> port that want to kill (optional)
 
-#variables
 DIR=`dirname $0`
-
 #methods
 findServer(){
   #gets remoteAddresses path and an index as input
@@ -109,7 +104,7 @@ readFileAndKill(){
 }
 
 #main method
-main() {
+main(){
   server_index=$1
   if [[ -n $server_index ]]; then
     findServer "$DIR/remoteAddresses.txt" "$server_index"
@@ -124,6 +119,5 @@ main() {
     killall "$DIR/remoteAddresses.txt"
   fi
 }
-
 #
 main

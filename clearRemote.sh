@@ -1,13 +1,11 @@
 #! /bin/bash
 
-#variables and constants
 DIR=`dirname $0`
 input="$DIR/remoteAddresses.txt"
-
 DEFAULT_REMOTE_PATH="Desktop/RemoteGamesFiles"
 
 #main method
-main() {
+main(){
   declare -i count
   declare -i runFlag
 
@@ -38,7 +36,8 @@ main() {
 
       echo "$server -> Done."
     fi
-done < $input
+
+  done < $input
 }
 
 #

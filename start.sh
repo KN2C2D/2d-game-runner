@@ -1,6 +1,5 @@
 #! /bin/bash
 
-#input discription
 # n : number of games running simultaneously
 # global_tag (optional): Game results will be saved on results/global_tag
 # ssp (optional) : servers start port - first server will be run on
@@ -35,20 +34,19 @@ initialize(){
     n=1
     echo "n=1"
   fi
-
+  
   read -t 5 -p "enter servers start port: " ssp
   if [[ $ssp -eq 0 ]]; then
     ssp=6000
     echo "ssp=6000"
   fi
-
+  
   read -t 5 -p "enter servers port difference: " spd
   if [[ $spd -eq 0 ]]; then
     spd=10
     echo "spd=10"
   fi
 }
-
 writePathToFile(){
   if [[ $resultDIR = "" ]] ; then
     resultDIR=$DIR/results
@@ -64,7 +62,6 @@ writePathToFile(){
   echo $teamsDIR > $DIR/path.txt
   echo $resultDIR >> $DIR/path.txt
 }
-
 runOnPorts(){
   declare -i i
   for (( i= 0; i<n; i++)) ; do
@@ -72,7 +69,6 @@ runOnPorts(){
     port=$port+$spd
   done
 }
-
 findLineOfResults(){
   if [ -e $resultDIR/Results.txt ] ; then
     lineOfResults=`wc -l $resultDIR/Results.txt | awk '{ print $1 }'`
@@ -80,7 +76,6 @@ findLineOfResults(){
     lineOfResults=0
   fi
 }
-
 bar(){
   local items=$1
   local total=$2
@@ -92,22 +87,22 @@ bar(){
   printf "%${left}s"
   echo -ne ']\r'
 }
-
 clearbar(){
   local size=$1
   printf " %s${size}  "
   echo -ne "\r"
 }
-
 progressBar(){
   declare -i preLine=-1
   findLineOfResults
   firstLines=$lineOfResults
   lineOfResults=0
   bar 0 100 50
+  lineOfGames=`wc -l $DIR/Games.txt | awk '{ print $1 }'`
   while ! [ $lineOfGames -eq $lineOfResults ] ; do
     findLineOfResults
     lineOfResults=$lineOfResults-$firstLines
+    lineOfGames=`wc -l $DIR/Games.txt | awk '{ print $1 }'`
     declare -i percent=$lineOfResults
     percent=$percent*100
     percent=$percent/$lineOfGames
@@ -121,9 +116,9 @@ progressBar(){
   echo "[=======================================================>"
   echo "Done!"
 }
-
 #main method
-main() {
+main(){
+  sed -i -r '/^\s*$/d' $DIR/Games.txt
   initialize
   writePathToFile
 

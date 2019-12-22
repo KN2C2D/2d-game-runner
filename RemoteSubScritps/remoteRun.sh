@@ -1,12 +1,10 @@
 #! /bin/bash
 
-#input discription
 #$1 ---> team1
 #$2 ---> team2
 #$3 ---> port
 #$4 ---> tag
-
-#variables
+################################################################################
 DIR=`dirname $0`
 
 declare -i port=$3
@@ -14,19 +12,15 @@ declare -i coach_port=$3+1
 declare -i olcoach_port=$3+2
 
 tag=$4
+
 Team1=$1
 Team2=$2
-
+#finding date for adding to log files
+D="$(date +%Y%m%d%H%M%S)"
 tmpDirName="$Team1-$Team2-`date +%d%H%M%S%N`"
-
-#methods
-findDate() {
-  #finding date for adding to log files
-  D="$(date +%Y%m%d%H%M%S)"
-  rt1=""
-  rt2=""
-}
-
+rt1=""
+rt2=""
+################################################################################
 runServerAndAgents(){
   #running Games
   $DIR/teams/$Team1/startAll $port &> $DIR/serverLog.txt &
@@ -54,8 +48,19 @@ findResults(){
   rt2=${tmp:0:i-1}
 }
 
+readFromKilled(){
+  if [ -e $DIR/killed.txt ] ; then
+    declare -i killed=`head -n 1 $DIR/killed.txt`
+    if [[ $killed = $port ]] ; then
+      tag="KILLED"
+      rm $DIR/killed.txt
+    fi
+  fi
+}
+
 tagging(){
   #tagging and saving results in proper format
+  readFromKilled
   RESULTS_PATH=`tail -n 1 $DIR/path.txt`
   master=`head -n 1 $DIR/masterAddress.txt`
 
@@ -79,34 +84,27 @@ tagging(){
   fi
 
   scp -r $DIR/results/* $master:$RESULTS_PATH </dev/null >/dev/null 2>/dev/null
-  rm -r $DIR/results/*
+  rm -r $DIR/results/* >/dev/null 2>/dev/null
 }
+################################################################################
+if ! [ -d $DIR/$tmpDirName ]
+then
+  mkdir $DIR/$tmpDirName
+fi
 
-#main method
-main() {
-  if ! [ -d $DIR/$tmpDirName ]
-  then
-    mkdir $DIR/$tmpDirName
-  fi
+runServerAndAgents
+findResults
 
-  runServerAndAgents
-  findResults
-  findDate
+#making a new log name for the log files
+logName="$Team1--vs--$Team2:$rt1--$rt2--$D"
+mv $DIR/$tmpDirName/*.rcg "$DIR/$tmpDirName/$logName.rcg"
+mv $DIR/$tmpDirName/*.rcl "$DIR/$tmpDirName/$logName.rcl"
 
-  #making a new log name for the log files
-  logName="$Team1--vs--$Team2:$rt1--$rt2--$D"
-  mv $DIR/$tmpDirName/*.rcg "$DIR/$tmpDirName/$logName.rcg"
-  mv $DIR/$tmpDirName/*.rcl "$DIR/$tmpDirName/$logName.rcl"
+if ! [ -d $DIR/results ]
+then
+  mkdir $DIR/results >/dev/null 2>/dev/null
+fi
 
-  if ! [ -d $DIR/results ]
-  then
-    mkdir $DIR/results >/dev/null 2>/dev/null
-  fi
+tagging
 
-  tagging
-
-  rm -rf $DIR/$tmpDirName
-}
-
-#
-main
+rm -rf $DIR/$tmpDirName

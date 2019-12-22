@@ -1,44 +1,39 @@
 #! /bin/bash
 
-#input discription
 # n : number of games running simultaneously
 # ssp (optional) : servers start port - first server will be run on
 #           this port and the number will be increased for next server and so on
 # spd (optional) : servers port difference - the port number will be
 #           increased by sdp from each server to the next
 
-#variables
-DIR=`dirname $0`
-
+#global variables
 declare -i n
 declare -i ssp
 declare -i spd
-
 teamsDIR=""
 resultDIR=""
-
+DIR=`dirname $0`
 declare -i lineOfResults
 declare -i lineOfGames=`wc -l $DIR/Games.txt | awk '{ print $1 }'`
 declare -i firstLines
-
 #methods
 initialize(){
   read -t 5 -p "enter path of teams directory: " teamsDIR
   if [[ $teamsDIR = "" ]]; then
     echo "$DIR/teams"
   fi
-
+  ###########
   read -t 5 -p "enter path of results directory: " resultDIR
   if [[ $resultDIR = "" ]]; then
     echo "$DIR/results"
   fi
-
+  ############
   read -t 5 -p "enter servers start port: " ssp
   if [[ $ssp -eq 0 ]]; then
     ssp=6000
     echo "ssp=6000"
   fi
-
+  ###########
   read -t 5 -p "enter servers port difference: " spd
   if [[ $spd -eq 0 ]]; then
     spd=10
@@ -119,9 +114,11 @@ progressBar(){
   firstLines=$lineOfResults
   lineOfResults=0
   bar 0 100 50
+  lineOfGames=`wc -l $DIR/Games.txt | awk '{ print $1 }'`
   while ! [ $lineOfGames -eq $lineOfResults ] ; do
     findLineOfResults
     lineOfResults=$lineOfResults-$firstLines
+    lineOfGames=`wc -l $DIR/Games.txt | awk '{ print $1 }'`
     declare -i percent=$lineOfResults
     percent=$percent*100
     percent=$percent/$lineOfGames
@@ -135,12 +132,11 @@ progressBar(){
   echo "[=======================================================>"
   echo "Done!"
 }
-
 #main method
-main() {
-  #storing PID
+main(){
   echo "start" $$ > $DIR/proc.txt
 
+  sed -i -r '/^\s*$/d' $DIR/Games.txt
   initialize
   countN "$DIR/remoteAddresses.txt"
   writePathToFile
