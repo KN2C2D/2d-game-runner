@@ -4,15 +4,13 @@
 #$2 ---> team2
 #$3 ---> port
 #$4 ---> tag
-################################################################################
-DIR=`dirname $0`
 
+#global variables
+DIR=`dirname $0`
 declare -i port=$3
 declare -i coach_port=$3+1
 declare -i olcoach_port=$3+2
-
 tag=$4
-
 Team1=$1
 Team2=$2
 #finding date for adding to log files
@@ -20,7 +18,7 @@ D="$(date +%Y%m%d%H%M%S)"
 tmpDirName="$Team1-$Team2-`date +%d%H%M%S%N`"
 rt1=""
 rt2=""
-################################################################################
+#methods
 runServerAndAgents(){
   #running Games
   $DIR/teams/$Team1/startAll $port &> $DIR/serverLog.txt &
@@ -86,25 +84,30 @@ tagging(){
   scp -r $DIR/results/* $master:$RESULTS_PATH </dev/null >/dev/null 2>/dev/null
   rm -r $DIR/results/* >/dev/null 2>/dev/null
 }
-################################################################################
-if ! [ -d $DIR/$tmpDirName ]
-then
-  mkdir $DIR/$tmpDirName
-fi
+#main method
+main(){
+  if ! [ -d $DIR/$tmpDirName ]
+  then
+    mkdir $DIR/$tmpDirName
+  fi
 
-runServerAndAgents
-findResults
+  runServerAndAgents
+  findResults
 
-#making a new log name for the log files
-logName="$Team1--vs--$Team2:$rt1--$rt2--$D"
-mv $DIR/$tmpDirName/*.rcg "$DIR/$tmpDirName/$logName.rcg"
-mv $DIR/$tmpDirName/*.rcl "$DIR/$tmpDirName/$logName.rcl"
+  #making a new log name for the log files
+  logName="$Team1--vs--$Team2:$rt1--$rt2--$D"
+  mv $DIR/$tmpDirName/*.rcg "$DIR/$tmpDirName/$logName.rcg"
+  mv $DIR/$tmpDirName/*.rcl "$DIR/$tmpDirName/$logName.rcl"
 
-if ! [ -d $DIR/results ]
-then
-  mkdir $DIR/results >/dev/null 2>/dev/null
-fi
+  if ! [ -d $DIR/results ]
+  then
+    mkdir $DIR/results >/dev/null 2>/dev/null
+  fi
 
-tagging
+  tagging
 
-rm -rf $DIR/$tmpDirName
+  rm -rf $DIR/$tmpDirName
+}
+
+#
+main

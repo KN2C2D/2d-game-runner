@@ -1,18 +1,20 @@
 #! /bin/bash
 
+#input discription
 # run script for k * n + m games from Games.txt on specified port and server
 # $1 -> remote_index: index of remote server (for this script) in remoteAddresses.txt
 # $2 -> Port for the games to be run on
 # $3 -> n: (total number of servers * total number of ports)
 # $4 -> m
 
-################################################################################
+#storing PID
 #$$ : the process number of the current shell
 echo "runOnPort" $port $$ >> proc.txt
 
+#variables
 DIR=`dirname $0`
 PARENT_DIR=`dirname $DIR`
-################################################################################
+
 declare -i remote_index=$1
 declare -i port=$2
 declare -i i=0
@@ -20,7 +22,8 @@ declare -i n=$3
 declare -i m=$4
 declare -i idx=0
 declare -i flag
-################################################################################
+
+#methods
 initialize_Arr(){
   for word in $line
     do
@@ -32,12 +35,10 @@ initialize_Arr(){
 readFileAndRun(){
   input=$1
 
-  declare -i lineCount=0
-  declare -i lineIdx=1
-  while [[ `wc -l $1 | awk '{ print $1 }'` -gt $lineCount ]] ; do
-    if [[ $i -eq $m ]] ; then
-      tmp=`head -n $lineIdx $1`
-      line=`echo "$tmp" | tail -n 1`
+  while IFS= read -r line
+  do
+    if [ $i -eq $m ]
+    then
       idx=0
       initialize_Arr
       if [ $idx -eq 2 ]
@@ -66,9 +67,7 @@ readFileAndRun(){
     then
       i=0
     fi
-    lineCount=lineCount+1
-    lineIdx=lineIdx+1
-  done
+  done < $input
 }
 
 findServer(){
@@ -112,9 +111,13 @@ findServer(){
   return 1
 }
 
-################################################################################
+#main method
+main() {
+  #finding the specified server
+  findServer "$PARENT_DIR/remoteAddresses.txt" "$remote_index"
 
-#finding the specified server
-findServer "$PARENT_DIR/remoteAddresses.txt" "$remote_index"
+  readFileAndRun "$PARENT_DIR/Games.txt"
+}
 
-readFileAndRun "$PARENT_DIR/Games.txt"
+#
+main

@@ -8,7 +8,7 @@ DIR=`dirname $0`
 input="$DIR/proc.txt"
 
 declare -i index=0
-###############################methods
+#methods
 initializeArr(){
   index=0
   for var in $line ; do
@@ -31,6 +31,10 @@ readFileAndKill(){
     fi
   done < $1
 }
-###############################
+#main method
+main(){
+  readFileAndKill $input
+}
 
-readFileAndKill $input
+#
+main
