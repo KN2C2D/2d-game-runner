@@ -23,8 +23,13 @@ readFileAndKill(){
     #arr[0] ---> name of process
     #arr[1] ---> port of process
     #arr[2] ---> pid of process
+    #except start
     if ! [[ -n $port ]]; then
-  	  kill ${arr[2]}
+      if [[ ${arr[0]} = "start" ]] ; then
+        kill ${arr[1]}
+      else
+  	    kill ${arr[2]}
+      fi
     elif [[ $port = ${arr[1]} ]] && [[ ${arr[0]} = "server" ]]; then
       echo ${arr[1]} > $DIR/killed.txt
  	    kill ${arr[2]}
