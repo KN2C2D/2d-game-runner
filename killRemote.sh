@@ -118,7 +118,7 @@ main() {
   if [[ -n $server_index ]]; then
     findServer "$DIR/remoteAddresses.txt" "$server_index"
     if ! [[ -n $port ]] ; then
-      echo "you must enter the port!"
+      echo "You must enter the port!"
     elif [[ -n $server ]] && [[ ${server:0:1} != "#" ]]; then
       ssh $server "$serverPath/kill.sh" $port </dev/null
     fi
