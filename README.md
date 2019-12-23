@@ -10,15 +10,15 @@ Game tools is  developed in a way so you can use them with ease without any need
 
 ### Features:
 
-1. Tagging each game (see Instructions)
+1. Tagging each game. (see Instructions)
 2. Running multiple games on multiple ports (om a single computer).
 3. Running multiple games on multiple (remote) servers and ports.
-4. Ports start and difference can be specified
-5. Saving game logs with their tag (see Instructions)
+4. Ports start and difference can be specified.
+5. Saving game logs with their tag. (see Instructions)
 6. Saving game results in a general file.
-7. Saving game results in a separate file for each tag
-8. Recognizing teams by nicknames (folder names - see Instructions)
-9. Including kill script (port and remote specific in addition to kill all)
+7. Saving game results in a separate file for each tag.
+8. Recognizing teams by nicknames. (folder names - see Instructions)
+9. Including kill script. (port and remote specific in addition to kill all)
 10. Handling results of penalty shoot-outs.
 11. Showing progress using progress bar.
 
@@ -166,6 +166,14 @@ Simply run the script.
 
 **Attention:** "remoteAddresses.txt" file should exist before running. 
 
+------
+
+### Team's Binaries format
+
+Each team's binaries should be in a folder with their name (Teams will be recognized by folder names in game tools). The only necessity is that each team should have a "startAll" executable in their folder.
+
+The "startAll" executable should get a command line argument port and start all of the agents (and coach) on the given port. 
+
 ---
 
 ### After run 
@@ -209,7 +217,19 @@ Open a terminal and run:
 
 #### Done:
 
-
+* Local simultaneous games handling.
+* Remote simultaneous games handling.
+* Optional Tagging for games.
+* Writing kill scripts for killing whole process.
+* Writing port specific kill scripts.
+* Adding default and input paths for teams folder.
+* Adding default and input paths for results folder.
+* Writing script for filtering results.
+* Adding progress bar.
+* Saving logs by date and teams nicknames.
+* Handling result of penalty shoot-outs.
+* Saving logs separately by their tag.
+* Saving Results generally and separately by their tags.
 
 #### To Do:
 
