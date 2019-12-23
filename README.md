@@ -28,6 +28,10 @@ Game tools is  developed in a way so you can use them with ease without any need
 
 Game Tools are designed for two ways of running; Running on local computer and Running on multiple remote servers.
 
+You can add new games while other games are running.
+
+Game Tools also contain kill scripts.
+
 #### Instructions for running on local PC
 
 1. Put each team's binaries in a folder with their name under teams folder. Default path for teams folder is `GAME_TOOLS_FOLDER/teams` but can be changed. (Format of teams binaries is described below)
@@ -69,6 +73,8 @@ Wait for games to finish.
 
    Adding a path for game files is optional, if you don't start your path from root (`/...`) it will be started from home directory of the user specified.  User specified should have access to the folder you add for game files.
 
+   **additional note:** If you already have a server in remoteAddresses.txt that is currently unavailable you don't have to remove it. you can disable it by adding a '#' to begging of it's line.
+
 4. Add master address to masterAddress.txt file in root folder of Game Tools in the following format
 
    `master_user@master_address`
@@ -97,6 +103,47 @@ Wait for games to finish.
 Wait for games to finish.
 
 
+
+##### Instructions for adding games while Game Tools is running
+
+You can add new games while game tools is running in both local and remote modes. For this simply open Games.txt file and add new games in the end with same format as rest of the games. Here each line should contain exactly one game (no blank or only space line).
+
+**Attention:** Adding new games while last n (number of simultaneous games)  are running is unsafe and is not guaranteed that game tools run those games as well. 
+
+
+
+##### Instructions for local kill
+
+To kill the whole process simply run kill script:
+
+`./kill.sh`
+
+If you want to kill a specific game, first find the ports the game is running on, then give the port to kill as an argument. like this 
+
+`./kill.sh Number_of_port`
+
+**Attention:** Using kill for remote games and killRemote for local games is unsafe, use every one in it's place.
+
+##### Instructions for remote kill
+
+To kill the whole process simply run killRemote script:
+
+`./killRemote.sh`
+
+If you want to kill a specific game, first find the number of the line of the server in remoteAddresses.txt and then the number of the port for that game on it's server, then give them to killRemote as argument. like this
+
+`./killRemote.sh Line_of_the_server Nubmer_of_port` 
+
+**Attention:** Using kill for remote games and killRemote for local games is unsafe, use every one in it's place.
+
+
+
+##### Instructions for results.sh
+
+1. Run results.sh in a shell.
+2. You will be asked if you want to save results in a file in addition to seeing them. Enter y for yes, n for no. If you don't Enter any of them or take more than 10 seconds, script assumes you don't want to use this option
+3. If you entered yes (y) in previous step you will be asked for a path for the save file if you don't specify or take more than 30 seconds, default location (./Saved_Results.txt) will be assumed.
+4. You will be asked if you want results of a specific tag. If you do not enter anything or take more than 10 seconds, script shows (and saves if you chose to) all of the tags.
 
 ---
 
@@ -138,6 +185,18 @@ Open a terminal and run:
 > sudo make install
 
 ---
+
+#### Done:
+
+
+
+#### To Do:
+
+* Adding tag specific kill to game tools.
+* Improving user interface.
+* Adding scripts for adding servers and games.
+
+------
 
 ### Maintainers
 
