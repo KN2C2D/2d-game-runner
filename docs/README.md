@@ -7,3 +7,5 @@
 - [Temporary_Files](TempFiles.md) lists and explains all the temporary files created during running games.
 - [Games_File](games.md) explains the Games.txt file
 - [Results_File](results.md) explains the results file
+- [Results_Script](results_script.md) explains results.sh script.
+
