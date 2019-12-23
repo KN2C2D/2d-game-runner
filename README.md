@@ -2,6 +2,8 @@
 
 ## KN2C Game Tools
 
+![tools_running](./Pics/tools_running.png)	
+
 Game tools is developed by **KN2C robotic team** for running multiple games between different teams. it can be used for testing or hosting competitions.
 
 Game tools is  developed in a way so you can use them with ease without any need for knowledge of shell commands and shell scripting. 
