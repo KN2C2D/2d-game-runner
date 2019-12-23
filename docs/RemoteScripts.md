@@ -28,4 +28,8 @@ note: port difference should at least be 3.
 
 #### killRemote.sh
 
-This scripts is designed to kill running scripts and jobs related to games on master and remote servers. It use kill.sh script in the remote servers. Index of the remote server and port can be specified optionally as input command arguments so rest won't be touched.
+This scripts is designed to kill running scripts and jobs related to games on master and remote servers. It uses kill.sh script in the remote servers. Index of the remote server and port can be specified optionally as input command arguments so rest won't be touched.
+
+If an index and a port specified it would only kills the game currently running on the specified remote and port.
+
+If no argument specified this scripts kills the whole process.
