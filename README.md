@@ -8,13 +8,6 @@ Game tools is  developed in a way so you can use them with ease without any need
 
 ---
 
-#### This project run in:
-
-- [x] local mode
-- [x] remote mode 
-
----
-
 ### Features:
 
 1. Tagging each game (see Instructions)
@@ -25,87 +18,85 @@ Game tools is  developed in a way so you can use them with ease without any need
 6. Saving game results in a general file.
 7. Saving game results in a separate file for each tag
 8. Recognizing teams by nicknames (folder names - see Instructions)
-9. Including kill script (port and remote specific in addition to killall)
+9. Including kill script (port and remote specific in addition to kill all)
 10. Handling results of penalty shoot-outs.
+11. Showing progress using progress bar.
 
 ---
 
-### How to use
+### Instructions
 
-First download this repository in your system
+Game Tools are designed for two ways of running; Running on local computer and Running on multiple remote servers.
 
-you have 2 choice for run the games:
+#### Instructions for running on local PC
 
-**run in local : **
+1. Put each team's binaries in a folder with their name under teams folder. Default path for teams folder is `GAME_TOOLS_FOLDER/teams` but can be changed. (Format of teams binaries is described below)
 
-1. Put all of the teams in "teams" folder. (each team should have a *startAll* script that gets the port that games is going to be run on and run all of the players and coach)
+2. Add Games in Games.txt file in root folder of Game Tools.
 
-*startAll*:
+   Each line of Games.txt should contain exactly one game in the following format.
 
-```bash
-#!/bin/sh
-#$1 ---> port
-DIR="$(dirname $0)"
-$DIR/src/start.sh -p $1
-```
+   `Team1 Team2`
 
-2. Specify games in "Games.txt" in the following formant: "Team1 Team2 tag". tag is optional. teams will be recognized by their folder name.
+   or
 
-3. simply run start.sh script:
+   `Team1 Team2 Tag`
 
-```bash
- ./start.sh
-```
+   Specifying tag for games is optional.
 
-you see command like this:
+3. Run start.sh script. You will be asked for the following:
+   1. Teams folder: The folder you put teams binaries in. (as mentioned above `GAME_TOOLS_FOLDER/teams` is default folder, if you placed teams binaries in a different folder enter it's path here)
+   2. Results folder: The folder results will be saved in. (Default is `GAME_TOOLS_FOLDER/results`)
+   3. Number of games running simultaneously
+   4. Server start port: Servers will be run on this port and above. (Default is 6000, leave untouched if you are unsure)
+   5. Server port difference: Difference between server ports. (Default is 10, should at least be 3. leave untouched if you are unsure)
 
-> ./start.sh 
->
-> enter path of teams directory: 
->
-> ./teams
->
-> enter path of results directory: 
->
-> ./results
->
-> enter number of games running simultaneously: 
->
-> n=1
->
-> enter servers start port: 
->
-> ssp=6000
->
-> enter servers port difference: 
->
-> spd=10
->
-> [=======================================================>
->
-> Done!
+Wait for games to finish.
 
-To kill process
+#### Instructions for running on remote servers
 
-- run kill.sh script (if you want to kill processes of a single port you can specify it as input otherwise it would kill all the processes involved)
+1. Add ssh key of master(id_rsa.pub) to `~/.ssh/authorized_keys` in all remote servers and add them as trusted servers in master.
 
-`./kill.sh `
+2. Add ssh key of every remote server(id_rsa.pub) to `~/.ssh/authorized_keys` in master and add master as a trusted server in them.
 
-`./kill.sh current port`
+3. Add your remote servers address to remoteAddresses.txt file in root folder of Game Tools in the following format
 
-- run killall.sh script to killall scripts
+   `user@server_address number_of_games_on_this_server`
 
-`./killall.sh`
+   or
 
-**run in remote mode**
+   `user@server_address Number_of_games_on_this_server Path_for_Game_Files`
 
-1. after putting teams in teams directory and write the Games.txt you should fill masterAddress.txt and fill remoteAddresses.txt 
+   Adding a path for game files is optional, if you don't start your path from root (`/...`) it will be started from home directory of the user specified.  User specified should have access to the folder you add for game files.
 
-2. next set ssh key in master and other systems 
+4. Add master address to masterAddress.txt file in root folder of Game Tools in the following format
 
-3. simply run startRemote script:
+   `master_user@master_address`
 
-`./startRemote.sh`
+5. Put each team's binaries in a folder with their name under teams folder. Default path for teams folder is `GAME_TOOLS_FOLDER/teams` but can be changed. (Format of teams binaries is described below)
+
+6. Add Games in Games.txt file in root folder of Game Tools.
+
+   Each line of Games.txt should contain exactly one game in the following format.
+
+   `Team1 Team2`
+
+   or
+
+   `Team1 Team2 Tag`
+
+   Specifying tag for games is optional.
+
+7. Run startRemote.sh script. You will be asked for the following:
+
+   1. Teams folder: The folder you put teams binaries in. (as mentioned above `GAME_TOOLS_FOLDER/teams` is default folder, if you placed teams binaries in a different folder enter it's path here)
+   2. Results folder: The folder results will be saved in. (Default is `GAME_TOOLS_FOLDER/results`)
+   3. Server start port: Servers will be run on this port and above. (Default is 6000, leave untouched if you are unsure)
+   4. Server port difference: Difference between server ports. (Default is 10, should at least be 3. leave untouched if you are unsure)
+
+Wait for games to finish.
+
+
 
 ---
 
