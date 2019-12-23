@@ -141,9 +141,30 @@ If you want to kill a specific game, first find the number of the line of the se
 ##### Instructions for results.sh
 
 1. Run results.sh in a shell.
+
 2. You will be asked if you want to save results in a file in addition to seeing them. Enter y for yes, n for no. If you don't Enter any of them or take more than 10 seconds, script assumes you don't want to use this option
+
 3. If you entered yes (y) in previous step you will be asked for a path for the save file if you don't specify or take more than 30 seconds, default location (./Saved_Results.txt) will be assumed.
+
 4. You will be asked if you want results of a specific tag. If you do not enter anything or take more than 10 seconds, script shows (and saves if you chose to) all of the tags.
+
+   
+
+##### Instructions for clear results
+
+Simply run the script.
+
+`./clearResults.sh`
+
+**Attention:** "paths.txt" file should exist before running. 
+
+##### Instructions for clear Remote
+
+Simply run the script.
+
+`./clearRemote.sh`
+
+**Attention:** "remoteAddresses.txt" file should exist before running. 
 
 ---
 
