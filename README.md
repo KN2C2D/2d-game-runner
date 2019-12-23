@@ -1,4 +1,4 @@
-<img src="/home/amir/Documents/rcss2d_game_scripts/Pics/KN2C_Logo.jpg" alt="KN2C_Logo" style="zoom: 67%;" />
+<img src="./Pics/KN2C_Logo.jpg" alt="KN2C_Logo" style="zoom: 67%;" />
 
 ## KN2C Game Tools
 
@@ -250,3 +250,4 @@ Open a terminal and run:
 - Arash Saatchi - <arash.saatchi99@gmail.com>
 
 [KN2C Website](http://kn2c.aras.kntu.ac.ir/)
+
