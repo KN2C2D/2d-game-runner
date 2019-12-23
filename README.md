@@ -236,6 +236,7 @@ Open a terminal and run:
 * Adding tag specific kill to game tools.
 * Improving user interface.
 * Adding scripts for adding servers and games.
+* Adding remote specific kill (to kill all of the game currently running on remote)
 
 ------
 

@@ -12,13 +12,9 @@ This scripts takes a port number, n and m then runs the k*n+m games in Games.txt
 
 It takes results path, teams path, number of games running simultaneously, server start port and server port difference as input (it also has default values for these inputs and timeouts). then runs runOnPort.sh script n times with 0~n-1 for m and server_start_port + server_port_difference * m for port number.
 
-#### killall.sh
-
-Kills all the scripts and jobs related to games using killall command.
-
 #### kill.sh
 
-Takes an optional port to kill processes related to games and the specified port. Kills all the processes related to games in no port specified as input argument.
+Takes an optional port to kill the game currently running on input port. Kills all the processes related to games if no port specified as input argument.
 
 #### clearResults.sh
 

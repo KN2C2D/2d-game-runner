@@ -1,3 +1,5 @@
+# Table of Contents
+
 - [Local_Scripts](LocalScripts.md) lists and explains all the scripts related to running games on a single computer.
 - [Remote_Files](RemoteFiles.md) lists and explains all the files that should be filled in order to run remote scripts.
 - [Remote_Scripts](RemoteScripts.md) lists and explains all the scripts related to running games on remote servers.

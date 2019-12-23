@@ -15,6 +15,3 @@ Writing anything out of that pattern with same number of word (two or three spac
 This file stores user and IP address of the master. It should be just one line with the format below:
 
 ​	user@IP_of_master
-
-
-
