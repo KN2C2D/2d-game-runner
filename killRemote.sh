@@ -112,14 +112,16 @@ readFileAndKill(){
 #main method
 main(){
   server_index=$1
+  port=$2
   if [[ -n $server_index ]]; then
     findServer "$DIR/remoteAddresses.txt" "$server_index"
-    if [[ -n $server ]] && [[ ${server:0:1} != "#" ]]; then
-      ssh $server "$serverPath/kill.sh" $2 </dev/null
+    if ! [[ -n $port ]] ; then
+      echo "you must enter the port!"
+    elif [[ -n $server ]] && [[ ${server:0:1} != "#" ]]; then
+      ssh $server "$serverPath/kill.sh" $port </dev/null
     fi
   else
     #Local processes kill
-    port=$2
     readFileAndKill "$DIR/proc.txt" $port
 
     killall "$DIR/remoteAddresses.txt"
