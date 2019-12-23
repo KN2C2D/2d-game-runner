@@ -1,5 +1,28 @@
 #! /bin/bash
 
+#signature
+signature='
+$$\   $$\ $$\   $$\  $$$$$$\   $$$$$$\
+$$ | $$  |$$$\  $$ |$$  __$$\ $$  __$$\
+$$ |$$  / $$$$\ $$ |\__/  $$ |$$ /  \__|
+$$$$$  /  $$ $$\$$ | $$$$$$  |$$ |
+$$  $$<   $$ \$$$$ |$$  ____/ $$ |
+$$ |\$$\  $$ |\$$$ |$$ |      $$ |  $$\
+$$ | \$$\ $$ | \$$ |$$$$$$$$\ \$$$$$$  |
+\__|  \__|\__|  \__|\________| \______/
+
+
+----------------------------------------
+          ***HELIOS_based***
+----------------------------------------
+by :
+    a.sadreddin
+    a.sadraii
+    m.moazen
+    m.teimouri
+----------------------------------------
+'
+
 # input discription
 # n : number of games running simultaneously
 # global_tag (optional): Game results will be saved on results/global_tag
@@ -127,7 +150,7 @@ progressBar() {
 
 #main method
 main() {
-  $DIR/signature.sh
+  echo "$signature"
   sed -i -r '/^\s*$/d' $DIR/Games.txt
   initialize
   writePathToFile

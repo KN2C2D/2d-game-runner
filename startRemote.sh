@@ -1,5 +1,28 @@
 #! /bin/bash
 
+#signature
+signature='
+$$\   $$\ $$\   $$\  $$$$$$\   $$$$$$\
+$$ | $$  |$$$\  $$ |$$  __$$\ $$  __$$\
+$$ |$$  / $$$$\ $$ |\__/  $$ |$$ /  \__|
+$$$$$  /  $$ $$\$$ | $$$$$$  |$$ |
+$$  $$<   $$ \$$$$ |$$  ____/ $$ |
+$$ |\$$\  $$ |\$$$ |$$ |      $$ |  $$\
+$$ | \$$\ $$ | \$$ |$$$$$$$$\ \$$$$$$  |
+\__|  \__|\__|  \__|\________| \______/
+
+
+----------------------------------------
+          ***HELIOS_based***
+----------------------------------------
+by :
+    a.sadreddin
+    a.sadraii
+    m.moazen
+    m.teimouri
+----------------------------------------
+'
+
 # input discription
 # n : number of games running simultaneously
 # ssp (optional) : servers start port - first server will be run on
@@ -137,7 +160,7 @@ progressBar() {
 
 #main method
 main() {
-  $DIR/signature.sh
+  echo "$signature"
   echo "start" $$ > $DIR/proc.txt
 
   sed -i -r '/^\s*$/d' $DIR/Games.txt
