@@ -165,6 +165,7 @@ main(){
       count+=1
     done
 
+
     if [[ $count -gt 1 ]] && [[ $count -lt 4 ]] && [[ ${W[0]:0:1} != "#" ]]
     then
       lim=`expr ${W[1]}`
