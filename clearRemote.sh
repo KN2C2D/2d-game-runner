@@ -5,7 +5,7 @@ input="$DIR/remoteAddresses.txt"
 DEFAULT_REMOTE_PATH="Desktop/RemoteGamesFiles"
 
 #main method
-main(){
+main() {
   declare -i count
   declare -i runFlag
 

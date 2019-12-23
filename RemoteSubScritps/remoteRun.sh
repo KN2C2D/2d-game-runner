@@ -13,13 +13,15 @@ declare -i olcoach_port=$3+2
 tag=$4
 Team1=$1
 Team2=$2
+
 #finding date for adding to log files
 D="$(date +%Y%m%d%H%M%S)"
 tmpDirName="$Team1-$Team2-`date +%d%H%M%S%N`"
 rt1=""
 rt2=""
+
 #methods
-runServerAndAgents(){
+runServerAndAgents() {
   #running Games
   $DIR/teams/$Team1/startAll $port &> $DIR/serverLog.txt &
   $DIR/teams/$Team2/startAll $port &> $DIR/serverLog.txt &
@@ -31,7 +33,7 @@ runServerAndAgents(){
   wait
 }
 
-findResults(){
+findResults() {
   #extracting results from log files to adding to new log files
   declare -i i=0
   tmp=`ls $DIR/$tmpDirName/*.rcg`
@@ -46,7 +48,7 @@ findResults(){
   rt2=${tmp:0:i-1}
 }
 
-readFromKilled(){
+readFromKilled() {
   if [ -e $DIR/killed.txt ] ; then
     declare -i killed=`head -n 1 $DIR/killed.txt`
     if [[ $killed = $port ]] ; then
@@ -56,7 +58,7 @@ readFromKilled(){
   fi
 }
 
-tagging(){
+tagging() {
   #tagging and saving results in proper format
   readFromKilled
   RESULTS_PATH=`tail -n 1 $DIR/path.txt`
@@ -84,8 +86,9 @@ tagging(){
   scp -r $DIR/results/* $master:$RESULTS_PATH </dev/null >/dev/null 2>/dev/null
   rm -r $DIR/results/* >/dev/null 2>/dev/null
 }
+
 #main method
-main(){
+main() {
   if ! [ -d $DIR/$tmpDirName ]
   then
     mkdir $DIR/$tmpDirName

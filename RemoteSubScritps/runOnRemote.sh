@@ -24,7 +24,7 @@ declare -i idx=0
 declare -i flag
 
 #methods
-initialize_Arr(){
+initialize_Arr() {
   for word in $line
     do
       Arr[$idx]=$word
@@ -32,7 +32,7 @@ initialize_Arr(){
     done
 }
 
-readFileAndRun(){
+readFileAndRun() {
   input=$1
 
   declare -i lineCount=0
@@ -74,7 +74,7 @@ readFileAndRun(){
   done
 }
 
-findServer(){
+findServer() {
   #gets remoteAddresses path and an index as input
   #finds the specified server (specification with input index)
   #return 0 if succesful 1 if failed
