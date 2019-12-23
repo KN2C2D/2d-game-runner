@@ -3,6 +3,7 @@
 DIR=`dirname $0`
 ``
 main() {
+  $DIR/signature.sh
   resultsDir=`tail -n 1 $DIR/path.txt`
 
   savePath=""

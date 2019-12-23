@@ -127,6 +127,7 @@ progressBar() {
 
 #main method
 main() {
+  $DIR/signature.sh
   sed -i -r '/^\s*$/d' $DIR/Games.txt
   initialize
   writePathToFile

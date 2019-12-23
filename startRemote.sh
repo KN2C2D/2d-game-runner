@@ -137,6 +137,7 @@ progressBar() {
 
 #main method
 main() {
+  $DIR/signature.sh
   echo "start" $$ > $DIR/proc.txt
 
   sed -i -r '/^\s*$/d' $DIR/Games.txt
