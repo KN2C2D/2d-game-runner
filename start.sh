@@ -39,7 +39,7 @@ teamsDIR=""
 resultDIR=""
 DIR=`dirname $0`
 declare -i lineOfResults
-declare -i lineOfGames=`wc -l $DIR/Games.txt | awk '{ print $1 }'`
+declare -i lineOfGames=`wc -l $DIR/data/Games.txt | awk '{ print $1 }'`
 declare -i firstLines
 
 #methods
@@ -85,8 +85,8 @@ writePathToFile() {
     resultDIR=${resultDIR:1}
     resultDIR=`pwd`$resultDIR
   fi
-  echo $teamsDIR > $DIR/path.txt
-  echo $resultDIR >> $DIR/path.txt
+  echo $teamsDIR > $DIR/data/path.txt
+  echo $resultDIR >> $DIR/data/path.txt
 }
 
 runOnPorts() {
@@ -129,11 +129,11 @@ progressBar() {
   firstLines=$lineOfResults
   lineOfResults=0
   bar 0 100 50
-  lineOfGames=`wc -l $DIR/Games.txt | awk '{ print $1 }'`
+  lineOfGames=`wc -l $DIR/data/Games.txt | awk '{ print $1 }'`
   while ! [ $lineOfGames -eq $lineOfResults ] ; do
     findLineOfResults
     lineOfResults=$lineOfResults-$firstLines
-    lineOfGames=`wc -l $DIR/Games.txt | awk '{ print $1 }'`
+    lineOfGames=`wc -l $DIR/data/Games.txt | awk '{ print $1 }'`
     declare -i percent=$lineOfResults
     percent=$percent*100
     percent=$percent/$lineOfGames
@@ -151,7 +151,7 @@ progressBar() {
 #main method
 main() {
   echo "$signature"
-  sed -i -r '/^\s*$/d' $DIR/Games.txt
+  sed -i -r '/^\s*$/d' $DIR/data/Games.txt
   initialize
   writePathToFile
 

@@ -27,7 +27,7 @@ DIR=`dirname $0`
 
 main() {
   echo "$signature"
-  resultsDir=`tail -n 1 $DIR/path.txt`
+  resultsDir=`tail -n 1 $DIR/data/path.txt`
 
   savePath=""
   declare -i saveFlag=0

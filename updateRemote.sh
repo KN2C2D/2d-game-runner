@@ -2,11 +2,11 @@
 
 #Global Variables
 DIR=`dirname $0`
-input="$DIR/remoteAddresses.txt"
+input="$DIR/data/remoteAddresses.txt"
 
 DEFAULT_REMOTE_PATH="Desktop/RemoteGamesFiles"
 REMOTE_SCRIPTS_PATH="$DIR/RemoteSubScritps"
-TEAMS_PATH=`head -n 1 $DIR/path.txt`
+TEAMS_PATH=`head -n 1 $DIR/data/path.txt`
 
 declare -i count
 declare -i runFlag
@@ -16,8 +16,7 @@ compress() {
   #compressing and packaging all the files for faster transmit
   echo "Compressing files."
   tar -czf $DIR/transfer.tar.gz $TEAMS_PATH $REMOTE_SCRIPTS_PATH/remoteRun.sh\
-   $DIR/path.txt $DIR/masterAddress.txt $DIR/$REMOTE_SCRIPTS_PATH/kill.sh\
-   $DIR/$REMOTE_SCRIPTS_PATH/killall.sh
+   $DIR/data/path.txt $DIR/data/masterAddress.txt $REMOTE_SCRIPTS_PATH/kill.sh
   echo "Files compressed."
 }
 

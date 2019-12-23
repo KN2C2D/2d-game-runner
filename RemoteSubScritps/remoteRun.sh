@@ -23,12 +23,12 @@ rt2=""
 #methods
 runServerAndAgents() {
   #running Games
-  $DIR/teams/$Team1/startAll $port &> $DIR/serverLog.txt &
-  $DIR/teams/$Team2/startAll $port &> $DIR/serverLog.txt &
+  $DIR/teams/$Team1/startAll $port &> $DIR/data/serverLog.txt &
+  $DIR/teams/$Team2/startAll $port &> $DIR/data/serverLog.txt &
   rcssserver server::synch_mode=true server::verbose=off server::port=$port \
   server::coach_port=$coach_port server::olcoach_port=$olcoach_port \
   server::auto_mode=true server::text_log_dir="$DIR/$tmpDirName"\
-  server::game_log_dir="$DIR/$tmpDirName" &> $DIR/serverLog.txt &
+  server::game_log_dir="$DIR/$tmpDirName" &> $DIR/data/serverLog.txt &
   echo "server $port $!" >> $DIR/proc.txt
   wait
 }
@@ -49,11 +49,11 @@ findResults() {
 }
 
 readFromKilled() {
-  if [ -e $DIR/killed.txt ] ; then
-    declare -i killed=`head -n 1 $DIR/killed.txt`
+  if [ -e $DIR/data/killed.txt ] ; then
+    declare -i killed=`head -n 1 $DIR/data/killed.txt`
     if [[ $killed = $port ]] ; then
       tag="KILLED"
-      rm $DIR/killed.txt
+      rm $DIR/data/killed.txt
     fi
   fi
 }
@@ -61,8 +61,8 @@ readFromKilled() {
 tagging() {
   #tagging and saving results in proper format
   readFromKilled
-  RESULTS_PATH=`tail -n 1 $DIR/path.txt`
-  master=`head -n 1 $DIR/masterAddress.txt`
+  RESULTS_PATH=`tail -n 1 $DIR/data/path.txt`
+  master=`head -n 1 $DIR/data/masterAddress.txt`
 
   if [ -n $tag ]
   then

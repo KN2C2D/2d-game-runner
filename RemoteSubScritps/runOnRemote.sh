@@ -118,9 +118,9 @@ findServer() {
 #main method
 main() {
   #finding the specified server
-  findServer "$PARENT_DIR/remoteAddresses.txt" "$remote_index"
+  findServer "$PARENT_DIR/data/remoteAddresses.txt" "$remote_index"
 
-  readFileAndRun "$PARENT_DIR/Games.txt"
+  readFileAndRun "$PARENT_DIR/data/Games.txt"
 }
 
 #

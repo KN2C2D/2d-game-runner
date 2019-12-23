@@ -105,7 +105,7 @@ readFileAndKill() {
   	kill ${arr[2]}
       fi
     elif [[ $port = ${arr[1]} ]] && [[ ${arr[0]} = "server" ]]; then
-      echo ${arr[1]} > $DIR/killed.txt
+      echo ${arr[1]} > $DIR/data/killed.txt
  	    kill ${arr[2]}
     fi
   done < $input
@@ -116,7 +116,7 @@ main() {
   server_index=$1
   port=$2
   if [[ -n $server_index ]]; then
-    findServer "$DIR/remoteAddresses.txt" "$server_index"
+    findServer "$DIR/data/remoteAddresses.txt" "$server_index"
     if ! [[ -n $port ]] ; then
       echo "You must enter the port!"
     elif [[ -n $server ]] && [[ ${server:0:1} != "#" ]]; then
@@ -126,7 +126,7 @@ main() {
     #Local processes kill
     readFileAndKill "$DIR/proc.txt" $port
 
-    killall "$DIR/remoteAddresses.txt"
+    killall "$DIR/data/remoteAddresses.txt"
   fi
 }
 

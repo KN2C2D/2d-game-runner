@@ -38,7 +38,7 @@ teamsDIR=""
 resultDIR=""
 DIR=`dirname $0`
 declare -i lineOfResults
-declare -i lineOfGames=`wc -l $DIR/Games.txt | awk '{ print $1 }'`
+declare -i lineOfGames=`wc -l $DIR/data/Games.txt | awk '{ print $1 }'`
 declare -i firstLines
 
 #methods
@@ -80,8 +80,8 @@ writePathToFile() {
     resultDIR=${resultDIR:1}
     resultDIR=`pwd`$resultDIR
   fi
-  echo $teamsDIR > $DIR/path.txt
-  echo $resultDIR >> $DIR/path.txt
+  echo $teamsDIR > $DIR/data/path.txt
+  echo $resultDIR >> $DIR/data/path.txt
 }
 
 countN() {
@@ -139,11 +139,11 @@ progressBar() {
   firstLines=$lineOfResults
   lineOfResults=0
   bar 0 100 50
-  lineOfGames=`wc -l $DIR/Games.txt | awk '{ print $1 }'`
+  lineOfGames=`wc -l $DIR/data/Games.txt | awk '{ print $1 }'`
   while ! [ $lineOfGames -eq $lineOfResults ] ; do
     findLineOfResults
     lineOfResults=$lineOfResults-$firstLines
-    lineOfGames=`wc -l $DIR/Games.txt | awk '{ print $1 }'`
+    lineOfGames=`wc -l $DIR/data/Games.txt | awk '{ print $1 }'`
     declare -i percent=$lineOfResults
     percent=$percent*100
     percent=$percent/$lineOfGames
@@ -163,9 +163,9 @@ main() {
   echo "$signature"
   echo "start" $$ > $DIR/proc.txt
 
-  sed -i -r '/^\s*$/d' $DIR/Games.txt
+  sed -i -r '/^\s*$/d' $DIR/data/Games.txt
   initialize
-  countN "$DIR/remoteAddresses.txt"
+  countN "$DIR/data/remoteAddresses.txt"
   writePathToFile
 
   echo ""
@@ -176,7 +176,7 @@ main() {
   # running runOnRemote script for each set of games (n times) (each server and port)
   declare -i m=0
   declare -i lim
-  input="$DIR/remoteAddresses.txt"
+  input="$DIR/data/remoteAddresses.txt"
   declare -i count
   declare -i i
   declare -i port=$ssp

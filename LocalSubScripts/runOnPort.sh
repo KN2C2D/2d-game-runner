@@ -63,7 +63,7 @@ readFileAndRun() {
 main() {
   #$$ : the process number of the current shell
   echo "runOnPort" $port $$ >> $PARENT_DIR/proc.txt
-  input="$PARENT_DIR/Games.txt"
+  input="$PARENT_DIR/data/Games.txt"
   readFileAndRun $input
 }
 

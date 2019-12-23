@@ -1,7 +1,7 @@
 #! /bin/bash
 
 DIR=`dirname $0`
-input="$DIR/remoteAddresses.txt"
+input="$DIR/data/remoteAddresses.txt"
 DEFAULT_REMOTE_PATH="Desktop/RemoteGamesFiles"
 
 #main method
