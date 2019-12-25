@@ -1,12 +1,23 @@
-<img src="./Pics/KN2C_Logo.jpg" alt="KN2C_Logo" style="zoom: 67%;" />
+## 2D Game Runner
 
-## KN2C Game Tools
+![tools_running](./Pics/tool_running.png)	
 
-![tools_running](./Pics/tools_running.png)	
+Game Runner is developed by **KN2C robotic team** for running multiple games between different teams. it can be used for testing or hosting competitions.
 
-Game tools is developed by **KN2C robotic team** for running multiple games between different teams. it can be used for testing or hosting competitions.
+Game Runner is  developed in a way so you can use them with ease without any need for knowledge of shell commands and shell scripting. 
 
-Game tools is  developed in a way so you can use them with ease without any need for knowledge of shell commands and shell scripting. 
+------
+
+### Maintainers
+
+**KN2C Robotic Team**
+
+- Amir Mirzaei - <amir.mirzaei1379@gmail.com>
+- Arash Saatchi - <arash.saatchi99@gmail.com>
+
+[KN2C Website](http://kn2c.aras.kntu.ac.ir/)
+
+<img src="./Pics/KN2C_Logo.jpg" alt="KN2C_Logo" style="zoom: 50%;" /> <img src="./Pics/2D.jpg" alt="2D" style="zoom:40%;" /> 
 
 ---
 
@@ -28,17 +39,17 @@ Game tools is  developed in a way so you can use them with ease without any need
 
 ### Instructions
 
-Game Tools are designed for two ways of running; Running on local computer and Running on multiple remote servers.
+Game Runner are designed for two ways of running; Running on local computer and Running on multiple remote servers.
 
 You can add new games while other games are running.
 
-Game Tools also contain kill scripts.
+Game Runner also contain kill scripts.
 
 #### Instructions for running on local PC
 
-1. Put each team's binaries in a folder with their name under teams folder. Default path for teams folder is `GAME_TOOLS_FOLDER/teams` but can be changed. (Format of teams binaries is described below)
+1. Put each team's binaries in a folder with their name under teams folder. Default path for teams folder is `GAME_RUNNER_FOLDER/teams` but can be changed. (Format of teams binaries is described below)
 
-2. Add Games in Games.txt file in root folder of Game Tools.
+2. Add Games in Games.txt file in data folder in root folder of Game Tools.
 
    Each line of Games.txt should contain exactly one game in the following format.
 
@@ -51,8 +62,8 @@ Game Tools also contain kill scripts.
    Specifying tag for games is optional.
 
 3. Run start.sh script. You will be asked for the following:
-   1. Teams folder: The folder you put teams binaries in. (as mentioned above `GAME_TOOLS_FOLDER/teams` is default folder, if you placed teams binaries in a different folder enter it's path here)
-   2. Results folder: The folder results will be saved in. (Default is `GAME_TOOLS_FOLDER/results`)
+   1. Teams folder: The folder you put teams binaries in. (as mentioned above `GAME_RUNNER_FOLDER/teams` is default folder, if you placed teams binaries in a different folder enter it's path here)
+   2. Results folder: The folder results will be saved in. (Default is `GAME_RUNNER_FOLDER/results`)
    3. Number of games running simultaneously
    4. Server start port: Servers will be run on this port and above. (Default is 6000, leave untouched if you are unsure)
    5. Server port difference: Difference between server ports. (Default is 10, should at least be 3. leave untouched if you are unsure)
@@ -67,7 +78,7 @@ Wait for games to finish.
 
 3. ssh server should be running in all of the remote servers and master and should be listening on port 22.
 
-4. Add your remote servers address to remoteAddresses.txt file in root folder of Game Tools in the following format
+4. Add your remote servers address to remoteAddresses.txt file in data folder in root folder of Game Runner in the following format
 
    `user@server_address number_of_games_on_this_server`
 
@@ -79,13 +90,13 @@ Wait for games to finish.
 
    **additional note:** If you already have a server in remoteAddresses.txt that is currently unavailable you don't have to remove it. you can disable it by adding a '#' to begging of it's line.
 
-5. Add master address to masterAddress.txt file in root folder of Game Tools in the following format
+5. Add master address to masterAddress.txt file in data folder in root folder of Game Runner in the following format
 
    `master_user@master_address`
 
-6. Put each team's binaries in a folder with their name under teams folder. Default path for teams folder is `GAME_TOOLS_FOLDER/teams` but can be changed. (Format of teams binaries is described below)
+6. Put each team's binaries in a folder with their name under teams folder. Default path for teams folder is `GAME_RUNNER_FOLDER/teams` but can be changed. (Format of teams binaries is described below)
 
-7. Add Games in Games.txt file in root folder of Game Tools.
+7. Add Games in Games.txt file in data folder in root folder of Game Runner.
 
    Each line of Games.txt should contain exactly one game in the following format.
 
@@ -99,8 +110,8 @@ Wait for games to finish.
 
 8. Run startRemote.sh script. You will be asked for the following:
 
-   1. Teams folder: The folder you put teams binaries in. (as mentioned above `GAME_TOOLS_FOLDER/teams` is default folder, if you placed teams binaries in a different folder enter it's path here)
-   2. Results folder: The folder results will be saved in. (Default is `GAME_TOOLS_FOLDER/results`)
+   1. Teams folder: The folder you put teams binaries in. (as mentioned above `GAME_RUNNER_FOLDER/teams` is default folder, if you placed teams binaries in a different folder enter it's path here)
+   2. Results folder: The folder results will be saved in. (Default is `GAME_RUNNER_FOLDER/results`)
    3. Server start port: Servers will be run on this port and above. (Default is 6000, leave untouched if you are unsure)
    4. Server port difference: Difference between server ports. (Default is 10, should at least be 3. leave untouched if you are unsure)
 
@@ -108,11 +119,11 @@ Wait for games to finish.
 
 
 
-##### Instructions for adding games while Game Tools is running
+##### Instructions for adding games while Game Runner is running
 
-You can add new games while game tools is running in both local and remote modes. For this simply open Games.txt file and add new games in the end with same format as rest of the games. Here each line should contain exactly one game (no blank or only space line).
+You can add new games while Game Runner is running in both local and remote modes. For this simply open Games.txt file and add new games in the end with same format as rest of the games. Here each line should contain exactly one game (no blank or only space line).
 
-**Attention:** Adding new games while last n (number of simultaneous games)  are running is unsafe and is not guaranteed that game tools run those games as well. 
+**Attention:** Adding new games while last n (number of simultaneous games)  are running is unsafe and is not guaranteed that Game Runner run those games as well. 
 
 
 
@@ -174,7 +185,7 @@ Simply run the script.
 
 ### Team's Binaries format
 
-Each team's binaries should be in a folder with their name (Teams will be recognized by folder names in game tools). The only necessity is that each team should have a "startAll" executable in their folder.
+Each team's binaries should be in a folder with their name (Teams will be recognized by folder names in Game Runner). The only necessity is that each team should have a "startAll" executable in their folder.
 
 The "startAll" executable should get a command line argument port and start all of the agents (and coach) on the given port. 
 
@@ -221,35 +232,23 @@ Open a terminal and run:
 
 #### Done:
 
-* Local simultaneous games handling.
-* Remote simultaneous games handling.
-* Optional Tagging for games.
-* Writing kill scripts for killing whole process.
-* Writing port specific kill scripts.
-* Adding default and input paths for teams folder.
-* Adding default and input paths for results folder.
-* Writing script for filtering results.
-* Adding progress bar.
-* Saving logs by date and teams nicknames.
-* Handling result of penalty shoot-outs.
-* Saving logs separately by their tag.
-* Saving Results generally and separately by their tags.
+- [x] Local simultaneous games handling.
+- [x] Remote simultaneous games handling.
+- [x] Optional Tagging for games.
+- [x] Writing kill scripts for killing whole process.
+- [x] Writing port specific kill scripts.
+- [x] Adding default and input paths for teams folder.
+- [x] Adding default and input paths for results folder.
+- [x] Writing script for filtering results.
+- [x] Adding progress bar.
+- [x] Saving logs by date and teams nicknames.
+- [x] Handling result of penalty shoot-outs.
+- [x] Saving logs separately by their tag.
+- [x] Saving Results generally and separately by their tags.
 
 #### To Do:
 
-* Adding tag specific kill to game tools.
-* Improving user interface.
-* Adding scripts for adding servers and games.
-* Adding remote specific kill (to kill all of the game currently running on remote)
-
-------
-
-### Maintainers
-
-**KN2C Robotic Team**
-
-- Amir Mirzaei - <amir.mirzaei1379@gmail.com>
-- Arash Saatchi - <arash.saatchi99@gmail.com>
-
-[KN2C Website](http://kn2c.aras.kntu.ac.ir/)
-
+- [ ] Adding tag specific kill to Game Runner.
+- [ ] Improving user interface.
+- [ ] Adding scripts for adding servers and games.
+- [ ] Adding remote specific kill (to kill all of the game currently running on remote)
