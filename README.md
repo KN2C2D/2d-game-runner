@@ -15,7 +15,7 @@ Game Runner is  developed in a way so you can use them with ease without any nee
 - Amir Mirzaei - <amir.mirzaei1379@gmail.com>
 - Arash Saatchi - <arash.saatchi99@gmail.com>
 
-<img src="./Pics/KN2C_Logo.jpg" alt="KN2C_Logo" style="zoom: 40%;" /> <img src="./Pics/2D.jpg" alt="2D" style="zoom:30%;" /> 
+<img src="./Pics/KN2C_Logo.jpg" alt="KN2C_Logo" style="zoom: 100%;" /> <img src="./Pics/2D.jpg" alt="2D" style="zoom:100%;" /> 
 
 ---
 
