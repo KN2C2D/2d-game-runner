@@ -10,14 +10,12 @@ Game Runner is  developed in a way so you can use them with ease without any nee
 
 ### Maintainers
 
-**KN2C Robotic Team**
+**[KN2C Robotic Team](http://kn2c.aras.kntu.ac.ir/)**
 
 - Amir Mirzaei - <amir.mirzaei1379@gmail.com>
 - Arash Saatchi - <arash.saatchi99@gmail.com>
 
-[KN2C Website](http://kn2c.aras.kntu.ac.ir/)
-
-<img src="./Pics/KN2C_Logo.jpg" alt="KN2C_Logo" style="zoom: 50%;" /> <img src="./Pics/2D.jpg" alt="2D" style="zoom:40%;" /> 
+<img src="./Pics/KN2C_Logo.jpg" alt="KN2C_Logo" style="zoom: 40%;" /> <img src="./Pics/2D.jpg" alt="2D" style="zoom:30%;" /> 
 
 ---
 
