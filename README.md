@@ -47,7 +47,7 @@ Game Runner also contain kill scripts.
 
 1. Put each team's binaries in a folder with their name under teams folder. Default path for teams folder is `GAME_RUNNER_FOLDER/teams` but can be changed. (Format of teams binaries is described below)
 
-2. Add Games in Games.txt file in data folder in root folder of Game Tools.
+2. Add Games in Games.txt file in data folder in data folder of Game Tools.
 
    Each line of Games.txt should contain exactly one game in the following format.
 
@@ -76,7 +76,7 @@ Wait for games to finish.
 
 3. ssh server should be running in all of the remote servers and master and should be listening on port 22.
 
-4. Add your remote servers address to remoteAddresses.txt file in data folder in root folder of Game Runner in the following format
+4. Add your remote servers address to remoteAddresses.txt file in data folder in data folder of Game Runner in the following format
 
    `user@server_address number_of_games_on_this_server`
 
@@ -88,13 +88,13 @@ Wait for games to finish.
 
    **additional note:** If you already have a server in remoteAddresses.txt that is currently unavailable you don't have to remove it. you can disable it by adding a '#' to begging of it's line.
 
-5. Add master address to masterAddress.txt file in data folder in root folder of Game Runner in the following format
+5. Add master address to masterAddress.txt file in data folder in data folder of Game Runner in the following format
 
    `master_user@master_address`
 
 6. Put each team's binaries in a folder with their name under teams folder. Default path for teams folder is `GAME_RUNNER_FOLDER/teams` but can be changed. (Format of teams binaries is described below)
 
-7. Add Games in Games.txt file in data folder in root folder of Game Runner.
+7. Add Games in Games.txt file in data folder in data folder of Game Runner.
 
    Each line of Games.txt should contain exactly one game in the following format.
 
