@@ -133,7 +133,7 @@ To kill the whole process simply run kill script:
 
 If you want to kill a specific game, first find the ports the game is running on, then give the port to kill as an argument. like this 
 
-`./kill.sh Number_of_port`
+`./kill.sh Port_Number`
 
 **Attention:** Using kill for remote games and killRemote for local games is unsafe, use every one in it's place.
 
@@ -145,7 +145,7 @@ To kill the whole process simply run killRemote script:
 
 If you want to kill a specific game, first find the number of the line of the server in remoteAddresses.txt and then the number of the port for that game on it's server, then give them to killRemote as argument. like this
 
-`./killRemote.sh Line_of_the_server Nubmer_of_port` 
+`./killRemote.sh Line_of_the_server Port_Number` 
 
 **Attention:** Using kill for remote games and killRemote for local games is unsafe, use every one in it's place.
 
@@ -250,3 +250,4 @@ Open a terminal and run:
 - [ ] Improving user interface.
 - [ ] Adding scripts for adding servers and games.
 - [ ] Adding remote specific kill (to kill all of the game currently running on remote)
+- [ ] Adding GUI
